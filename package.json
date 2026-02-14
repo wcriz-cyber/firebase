@@ -1,0 +1,25 @@
+{
+  "name": "c5x-unified-orbitron",
+  "version": "25.31.0",
+  "description": "Sistema profesional de trading de criptomonedas con análisis en tiempo real",
+  "main": "index.html",
+  "scripts": {
+    "serve": "firebase serve",
+    "deploy": "firebase deploy",
+    "test": "echo \"No tests configured\" && exit 0"
+  },
+  "keywords": [
+    "trading",
+    "cryptocurrency",
+    "bitcoin",
+    "gate.io",
+    "pwa",
+    "firebase"
+  ],
+  "author": "",
+  "license": "UNLICENSED",
+  "private": true,
+  "devDependencies": {
+    "firebase-tools": "^13.0.0"
+  }
+}

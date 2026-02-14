@@ -1,0 +1,22 @@
+{
+  "name": "C5X - V25.31 UNIFIED ORBITRON",
+  "short_name": "C5X Trading",
+  "description": "Sistema profesional de trading de criptomonedas con análisis en tiempo real",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0a0e13",
+  "theme_color": "#0b0e11",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "icon.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["finance", "trading"],
+  "lang": "es-ES",
+  "scope": "/",
+  "prefer_related_applications": false
+}
