@@ -1,4 +1,4 @@
-# 🚀 C5X - V25.31 UNIFIED ORBITRON
+# 🚀 C5X - V25.31
 
 Sistema profesional de trading de criptomonedas con análisis en tiempo real y gestión avanzada de riesgos.
 
