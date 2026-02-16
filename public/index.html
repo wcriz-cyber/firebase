@@ -20,7 +20,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
 
     <style>
-        /* CONFIGURACIÓN DE FUENTES: TODO ORBITRON EXCEPTO NÚMEROS */
+        /* CONFIGURACIÓN DE FUENTES */
         :root { 
             --bg: #0a0e13; 
             --surface: #141922; 
@@ -44,14 +44,9 @@
             --safe-top: env(safe-area-inset-top, 20px); 
             --safe-bottom: env(safe-area-inset-bottom, 20px); 
             --skeleton: rgba(255,255,255,0.05); 
-            
-            /* FUENTE PRINCIPAL Y TITULOS: ORBITRON */
             --font-main: 'Orbitron', sans-serif; 
             --font-head: 'Orbitron', sans-serif; 
-            
-            /* FUENTE NUMERICA: JETBRAINS MONO (Para mantener estructura) */
             --font-num: 'JetBrains Mono', monospace; 
-            
             --fs-set-title: 14px; 
             --fs-set-label: 11px; 
             --fs-set-input: 16px; 
@@ -60,32 +55,41 @@
         body.light-mode { --bg: #F2F0E9; --surface: #E8E6DF; --surface-glass: #F2F0E9; --card-bg: rgba(160, 150, 140, 0.08); --border: #D6D2C8; --border-strong: #BFBBB0; --text-primary: #4A453E; --text-secondary: #7A756D; --text-tertiary: #9E9890; --chart-bg: #F2F0E9; --skeleton: rgba(0,0,0,0.06); --short: #C87965; --danger: #C87965; --long: #6F9C76; --brand: #5C7C8A; --warning: #D99E4B; --zone-gold: #D99E4B; --zone-hot: #C87965; --zone-warm: #8C99A6; }
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; outline: none; }
         
-        /* APLICAMOS ORBITRON AL BODY */
         body { font-family: var(--font-main); font-weight: 500; background: var(--bg); color: var(--text-primary); padding-top: var(--safe-top); padding-bottom: calc(20px + var(--safe-bottom)); overflow-x: hidden; user-select: none; font-size: 16px; overscroll-behavior-y: none; transition: background 0.3s ease, color 0.3s ease; letter-spacing: 0.5px; }
         
-        /* SCROLLBAR */
+        /* ESTILOS ORIGINALES CONSERVADOS */
         ::-webkit-scrollbar { width: 6px; height: 6px; }
         ::-webkit-scrollbar-track { background: var(--bg); }
         ::-webkit-scrollbar-thumb { background: var(--border-strong); border-radius: 3px; }
         ::-webkit-scrollbar-thumb:hover { background: var(--brand); }
         
-        /* TIPOGRAFÍA ESPECÍFICA */
         .brand-text, .nav-title, .setting-section-title, .theme-name-label { font-family: var(--font-head); }
         .ticker-price, .input-field, .stat-value, .u-val-primary { font-family: var(--font-num); }
         
-        /* ANIMACIONES Y CLASES GENERALES */
         svg { fill: none; stroke: currentColor; stroke-linecap: round; stroke-linejoin: round; stroke-width: 2; pointer-events: none; transition: all 0.3s ease; }
         @keyframes pulse-ring { 0% { box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.4); } 70% { box-shadow: 0 0 0 6px rgba(59, 130, 246, 0); } 100% { box-shadow: 0 0 0 0 rgba(59, 130, 246, 0); } }
         @keyframes slide-in { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes breathe-gold { 0% { box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.1); border-color: rgba(245, 158, 11, 0.3); transform: scale(1); background: rgba(245, 158, 11, 0.1); } 50% { box-shadow: 0 0 20px 0 rgba(245, 158, 11, 0.4); border-color: #f59e0b; transform: scale(1.02); background: rgba(245, 158, 11, 0.2); } 100% { box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.1); border-color: rgba(245, 158, 11, 0.3); transform: scale(1); background: rgba(245, 158, 11, 0.1); } }
+        @keyframes breathe-radar { 0% { box-shadow: 0 4px 12px rgba(0,0,0,0.2); transform: scale(1); } 50% { box-shadow: 0 6px 20px rgba(59, 130, 246, 0.15); transform: scale(1.005); } 100% { box-shadow: 0 4px 12px rgba(0,0,0,0.2); transform: scale(1); } }
+        @keyframes gold-flash-anim { 0% { background-color: rgba(245, 158, 11, 0.1); border-color: rgba(245, 158, 11, 0.3); box-shadow: 0 0 0 rgba(245, 158, 11, 0); } 50% { background-color: rgba(245, 158, 11, 0.25); border-color: rgba(245, 158, 11, 0.8); box-shadow: 0 0 15px rgba(245, 158, 11, 0.4); } 100% { background-color: rgba(245, 158, 11, 0.1); border-color: rgba(245, 158, 11, 0.3); box-shadow: 0 0 0 rgba(245, 158, 11, 0); } }
+        @keyframes gold-pulse-slot { 0% { box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.7); border-color: var(--warning); background: rgba(245, 158, 11, 0.2); } 50% { box-shadow: 0 0 0 10px rgba(245, 158, 11, 0); border-color: #fff; background: rgba(245, 158, 11, 0.5); } 100% { box-shadow: 0 0 0 0 rgba(245, 158, 11, 0); border-color: var(--warning); background: rgba(245, 158, 11, 0.2); } }
         
-        /* HEADER & NAV */
+        .slot-card.flash-gold-slot { animation: gold-pulse-slot 1.5s infinite !important; color: #fff !important; font-weight: 900 !important; z-index: 100; }
+        .anim-click { transition: transform 0.15s cubic-bezier(0.34, 1.56, 0.64, 1); }
+        .anim-click:active { transform: scale(0.92); opacity: 0.8; }
+        .anim-pulse { animation: pulse-ring 2s infinite; }
+        .section-enter { animation: slide-in 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
+        .skeleton-box { background: linear-gradient(90deg, var(--skeleton) 25%, var(--card-bg) 50%, var(--skeleton) 75%); background-size: 200% 100%; animation: shimmer 1.5s infinite; border-radius: 4px; color: transparent !important; }
+        .skeleton-text { display: inline-block; min-width: 40px; min-height: 1em; border-radius: 4px; }
+        
+        #toast { visibility: hidden; width: auto; max-width: 250px; background-color: var(--surface); border: 1px solid var(--border); color: var(--text-primary); text-align: center; border-radius: 16px; padding: 8px 16px; position: fixed; z-index: 9999; left: 50%; top: -100px; transform: translateX(-50%); font-weight: 700; font-size: 11px; font-family: var(--font-head); box-shadow: 0 4px 16px rgba(0,0,0,0.5); transition: top 0.3s, opacity 0.3s; opacity: 0; backdrop-filter: blur(8px); }
+        #toast.show { top: calc(15px + var(--safe-top)); visibility: visible; opacity: 1; }
+
         .fixed-header { position: fixed; top: 0; left: 0; width: 100%; z-index: 1000; background: var(--bg); padding-top: var(--safe-top); transition: background 0.3s; border-bottom: none; }
         .app-header { display: flex; justify-content: space-between; align-items: center; height: 50px; padding: 0 16px; max-width: 1400px; margin: 0 auto; position: relative; }
         .brand-btn { display: flex; align-items: center; gap: 6px; cursor: pointer; padding: 5px; position: relative; z-index: 50; }
         .theme-btn { width: 36px; height: 36px; border-radius: 50%; background: transparent; border: 1px solid var(--border); color: var(--text-primary); display: flex; align-items: center; justify-content: center; font-size: 16px; flex-shrink: 0; position: relative; z-index: 50; }
-        .brand-text { font-family: var(--font-head); font-weight: 900; font-size: 24px; color: var(--brand); line-height: 1; }
         
-        /* TICKER */
         .ticker-container { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); display: flex; align-items: center; justify-content: center; width: 60%; max-width: 300px; z-index: 10; pointer-events: none; }
         .ticker-pill { display: flex; align-items: center; justify-content: center; gap: 12px; background: rgba(255,255,255,0.03); border: 1px solid var(--border); padding: 0 16px; border-radius: 24px; height: 40px; white-space: nowrap; overflow: hidden; width: 100%; pointer-events: auto; }
         .ticker-sym { font-family: var(--font-head); font-weight: 800; font-size: 14px; color: var(--text-secondary); }
@@ -93,17 +97,14 @@
         .ticker-pct { font-family: var(--font-num); font-weight: 700; font-size: 12px; padding: 2px 6px; border-radius: 6px; }
         .ticker-pct.up { background: rgba(16, 185, 129, 0.15); color: var(--long); }
         .ticker-pct.down { background: rgba(239, 68, 68, 0.15); color: var(--short); }
-        
-        /* USDT DISPLAY (Panel 2 y 3) */
+
         .usdt-display { display: flex; align-items: center; justify-content: center; gap: 8px; background: rgba(16, 185, 129, 0.1); border: 1px solid var(--long); padding: 8px 20px; border-radius: 20px; font-family: var(--font-num); font-weight: 800; font-size: 18px; color: var(--long); box-shadow: 0 0 10px rgba(16, 185, 129, 0.15); }
         .usdt-label { font-family: var(--font-head); font-size: 12px; font-weight: 700; letter-spacing: 1px; color: var(--text-secondary); }
 
-        /* TIME FRAME BAR */
-        .tf-bar { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; padding: 4px 12px 6px 12px; justify-content: center; background: var(--bg); border: none; margin: 0; box-shadow: none; overflow: hidden; max-height: 50px; }
+        .tf-bar { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; padding: 4px 12px 6px 12px; justify-content: center; background: var(--bg); max-height: 50px; }
         .tf-btn { background: transparent; border: none; color: var(--text-tertiary); padding: 4px 0; text-align: center; font-family: sans-serif; font-size: 12px; font-weight: 700; border-radius: 8px 8px 0 0; }
         .tf-btn.active { color: var(--brand); background: rgba(59, 130, 246, 0.1); font-weight: 800; }
 
-        /* SLOT NAV */
         .slot-nav { display: flex; overflow-x: auto; padding: 0px 10px 4px 10px; position: sticky; top: calc(78px + var(--safe-top)); z-index: 900; background: var(--bg); gap: 4px; scroll-snap-type: x mandatory; }
         .slot-nav::-webkit-scrollbar { display: none; }
         .slot-card { flex: 0 0 24%; min-width: 24%; background: transparent; color: var(--text-tertiary); padding: 8px 0; text-align: center; font-size: 14px; font-weight: 700; border-radius: 0 0 8px 8px; position: relative; transition: all 0.3s; scroll-snap-align: start; cursor: pointer; }
@@ -111,11 +112,10 @@
         .slot-card.active::after { content: ''; position: absolute; bottom: 0; left: 25%; right: 25%; height: 3px; background: var(--brand); border-radius: 3px 3px 0 0; }
         .slot-card.has-profit:not(.active)::before { content: '•'; position: absolute; bottom: 2px; left: 0; right: 0; color: var(--long); font-size: 14px; line-height: 0; }
 
-        /* PANELES DESLIZABLES */
         .panels-wrapper { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; overflow: hidden; padding-top: var(--safe-top); padding-bottom: var(--safe-bottom); }
         .panels-container { display: flex; width: 300%; height: 100%; transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94); will-change: transform; }
         .panel { width: 33.333%; height: 100%; overflow-y: auto; overflow-x: hidden; -webkit-overflow-scrolling: touch; flex-shrink: 0; }
-        .panel-content { min-height: 100%; padding: 4px; padding-bottom: 60px; } /* Padding bottom para scroll completo */
+        .panel-content { min-height: 100%; padding: 4px; padding-bottom: 60px; }
 
         .panels-container[data-active="0"] { transform: translateX(0%); }
         .panels-container[data-active="1"] { transform: translateX(-33.333%); }
@@ -125,18 +125,21 @@
         .panel-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--border); transition: all 0.3s ease; }
         .panel-dot.active { background: var(--brand); width: 24px; border-radius: 4px; }
 
-        /* CHART & RADAR (Panel 1) */
         .chart-wrapper { height: 280px; background: var(--chart-bg); margin: 0 10px 6px 10px; border-radius: var(--radius-m); border: 1px solid var(--border); overflow: hidden; position: relative; }
         .price-lines-overlay { position: absolute; top: 0; left: 0; right: 0; bottom: 0; pointer-events: none; z-index: 10; }
         .chart-fs-btn { position: absolute; bottom: 10px; right: 10px; z-index: 20; width: 30px; height: 30px; background: rgba(128,128,128,0.2); border-radius: 6px; display: flex; align-items: center; justify-content: center; color: var(--text-primary); backdrop-filter: blur(4px); }
-        
-        .radar-ticker-large { background: var(--surface); border: 1px solid var(--border); border-radius: 18px; padding: 5px 10px; margin: 4px 10px 10px; text-align: center; position: relative; cursor: pointer; min-height: 85px; display: flex; flex-direction: column; justify-content: center; }
+
+        .radar-ticker-large { background: var(--surface); border: 1px solid var(--border); border-radius: 18px; padding: 5px 10px; margin: 4px 10px 10px; text-align: center; position: relative; cursor: pointer; min-height: 85px; display: flex; flex-direction: column; justify-content: center; animation: breathe-radar 3s ease-in-out infinite; }
+        .radar-ticker-large.gold-mode-active { animation: breathe-gold 2s infinite ease-in-out !important; border-color: rgba(251, 191, 36, 0.4); background: rgba(251, 191, 36, 0.05) !important; box-shadow: 0 4px 20px rgba(251, 191, 36, 0.15) !important; }
         .radar-header-line { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 12px; width: 100%; }
         .radar-title-compact { font-family: var(--font-head); font-size: 14px; font-weight: 900; color: var(--brand); letter-spacing: 2px; display: flex; align-items: center; gap: 6px; text-transform: uppercase; }
         .radar-token-centered { font-family: var(--font-num); font-weight: 800; font-size: 20px; color: var(--text-primary); text-align: center; }
         .radar-balance-compact { font-family: 'JetBrains Mono', monospace; font-size: 24px; font-weight: 800; color: var(--long); text-shadow: 0 0 12px rgba(16, 185, 129, 0.3); }
+        .radar-zone-badge { padding: 4px 10px; border-radius: 12px; font-size: 10px; font-weight: 800; text-transform: uppercase; display: inline-block; }
+        .radar-zone-badge.gold { background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%); color: #000; animation: pulse-gold 2s infinite; }
+        .radar-zone-badge.hot { background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%); color: #fff; }
+        .radar-zone-badge.warm { background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); color: #fff; }
 
-        /* DASHBOARD CARD ESTILO ORIGINAL */
         .dashboard-card { background: var(--surface); border: 1px solid var(--border); border-radius: 18px; margin: 0 10px 10px; padding: 8px; box-shadow: 0 8px 25px rgba(0,0,0,0.3); position: relative; overflow: hidden; }
         .dashboard-card::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 2px; background: linear-gradient(90deg, var(--brand), var(--long)); }
         
@@ -145,7 +148,9 @@
         .dash-wallet-display { font-family: var(--font-num); font-size: 22px; color: var(--long); font-weight: 800; text-shadow: 0 0 12px rgba(16, 185, 129, 0.3); }
 
         .dash-stats-matrix { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 3px; margin-bottom: 4px; }
-        .stat-box-unified { background: rgba(255,255,255,0.02); border: 1px solid var(--border); border-radius: 10px; padding: 2px 2px; text-align: center; display: flex; flex-direction: column; justify-content: center; height: 48px; min-height: 48px; position: relative; }
+        .target-and-strategies-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 3px; margin-bottom: 4px; }
+        
+        .stat-box-unified { background: rgba(255,255,255,0.02); border: 1px solid var(--border); border-radius: 10px; padding: 2px 2px; text-align: center; display: flex; flex-direction: column; justify-content: center; height: 48px; min-height: 48px; }
         .stat-lbl { font-size: 9px !important; color: var(--text-tertiary); font-weight: 700; margin-bottom: 0px !important; text-transform: uppercase; line-height: 1 !important; }
         .stat-val { font-family: var(--font-num); font-size: 14px !important; font-weight: 800; color: var(--text-primary); line-height: 1.1 !important; }
         .stat-val.green { color: var(--long); }
@@ -153,16 +158,18 @@
         .dash-input-box { background: rgba(255,255,255,0.02); border: 1px solid var(--border); border-radius: 10px; padding: 4px 6px; display: flex; flex-direction: column; justify-content: center; align-items: center; cursor: pointer; height: 48px; }
         .dash-input-box input { background: transparent; border: none; color: var(--text-primary); font-family: var(--font-num); font-size: 13px !important; font-weight: 800; text-align: center; width: 100%; outline: none; padding: 0; }
         
-        /* Controles Dashboard */
-        .dash-controls-unified { display: grid; grid-template-columns: 1fr 44px; gap: 4px; align-items: stretch; margin-top: 4px; }
-        .trading-manual-btn { background: rgba(59, 130, 246, 0.1); border: 2px solid var(--brand); border-radius: 12px; padding: 0 8px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1px; font-family: var(--font-head); font-weight: 900; font-size: 12px; letter-spacing: 0.8px; color: var(--brand); cursor: pointer; height: 44px; }
-        .trading-manual-btn.auto-mode { background: rgba(16, 185, 129, 0.1); border-color: var(--long); color: var(--long); }
+        .strategy-option-compact { background: rgba(255,255,255,0.02); border: 1.5px solid var(--border); border-radius: 10px; padding: 0px 4px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-family: var(--font-head); font-weight: 900; font-size: 9px; height: 48px; }
+        .strategy-option-compact.mode-normal { background: rgba(59, 130, 246, 0.15); color: var(--brand); border-color: var(--brand); box-shadow: 0 0 8px rgba(59, 130, 246, 0.3); }
+        
+        .dash-target-bar-compact { background: linear-gradient(90deg, rgba(245, 158, 11, 0.1), rgba(251, 146, 60, 0.05)); border: 1px solid var(--warning); border-radius: 10px; padding: 0px 6px; display: flex; justify-content: center; align-items: center; height: 48px; cursor: pointer; }
+        .target-center { display: flex; flex-direction: column; align-items: center; justify-content: center; }
+
+        .dash-controls-unified { display: grid; grid-template-columns: 44px 1fr 44px; gap: 4px; align-items: stretch; margin-top: 4px; }
         .btn-mini-control { width: 44px; height: 44px; background: rgba(255,255,255,0.02); border: 1px solid var(--border); border-radius: 12px; display: flex; align-items: center; justify-content: center; cursor: pointer; color: var(--text-secondary); }
+        .trading-manual-btn { background: rgba(59, 130, 246, 0.1); border: 2px solid var(--brand); border-radius: 12px; padding: 0 8px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1px; font-family: var(--font-head); font-weight: 900; font-size: 12px; color: var(--brand); cursor: pointer; height: 44px; }
+        .trading-manual-btn.auto-mode { background: rgba(16, 185, 129, 0.1); border-color: var(--long); color: var(--long); }
         
-        /* MULTI-DASHBOARD CONTAINER */
-        #multiDashContainer { display: flex; flex-direction: column; gap: 15px; padding-bottom: 20px; }
-        
-        /* LEVELS */
+        /* Grid de Niveles */
         .levels-container { padding: 8px 10px; display: flex; flex-direction: column; gap: 7px; max-height: 100%; overflow-y: auto; overflow-x: hidden; }
         .unified-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: var(--radius-m); padding: 10px; display: grid; grid-template-columns: 44px 1fr auto; gap: 10px; align-items: center; cursor: pointer; position: relative; height: 82px; min-height: 82px; flex-shrink: 0; }
         .unified-card.is-filled { background: rgba(16, 185, 129, 0.12); border: 1px solid var(--long); box-shadow: 0 4px 15px rgba(16, 185, 129, 0.15); transform: scale(1.01); z-index: 5; }
@@ -174,27 +181,17 @@
         .u-right { text-align: right; display: flex; flex-direction: column; justify-content: center; gap: 4px; }
         .order-status-badge { position: absolute; top: 4px; left: 48px; padding: 2px 6px; border-radius: 8px; font-size: 7px; font-weight: 800; font-family: var(--font-head); text-transform: uppercase; z-index: 10; }
         .order-status-badge.filled { background: rgba(16, 185, 129, 0.2); color: var(--long); border: 1px solid var(--long); }
-        
+
+        /* MULTI-DASHBOARD CONTAINER */
+        #multiDashContainer { display: flex; flex-direction: column; gap: 15px; padding-bottom: 20px; }
+
         /* UTILS */
         .content-spacer { margin-top: 80px; max-width: 800px; margin-left: auto; margin-right: auto; padding: 0 4px; }
         .app-section { display: none; opacity: 0; transition: opacity 0.2s ease; }
         .app-section.active { display: block; opacity: 1; animation: slide-in 0.3s ease-out; }
-        .anim-click:active { transform: scale(0.92); opacity: 0.8; }
         .hidden { display: none !important; }
         
-        #toast { visibility: hidden; width: auto; max-width: 250px; background-color: var(--surface); border: 1px solid var(--border); color: var(--text-primary); text-align: center; border-radius: 16px; padding: 8px 16px; position: fixed; z-index: 9999; left: 50%; top: -100px; transform: translateX(-50%); font-weight: 700; font-size: 11px; font-family: var(--font-head); box-shadow: 0 4px 16px rgba(0,0,0,0.5); transition: top 0.3s, opacity 0.3s; opacity: 0; backdrop-filter: blur(8px); }
-        #toast.show { top: calc(15px + var(--safe-top)); visibility: visible; opacity: 1; }
-        
-        /* NAV MENU MODAL */
-        #navModal { position: fixed; inset: 0; background: rgba(0,0,0,0.85); backdrop-filter: blur(8px); z-index: 2000; display: none; justify-content: center; align-items: center; padding-top: var(--safe-top); }
-        .nav-content { background: var(--surface); width: 85%; max-width: 320px; border-radius: 30px; padding: 35px 25px; border: 1px solid var(--border); box-shadow: 0 30px 60px rgba(0,0,0,0.6); display: flex; flex-direction: column; gap: 15px; }
-        .nav-title { font-family: var(--font-head); font-size: 18px; margin-bottom: 10px; color: var(--brand); text-align: center; font-weight: 900; letter-spacing: 2px; }
-        .nav-item { display: flex; align-items: center; padding: 20px; border-radius: 18px; background: rgba(255,255,255,0.02); border: 1px solid var(--border); cursor: pointer; transition: 0.3s; }
-        .nav-item.selected { background: rgba(59, 130, 246, 0.1); border-color: var(--brand); box-shadow: 0 5px 20px rgba(59, 130, 246, 0.15); }
-        .nav-text { font-family: var(--font-head); font-weight: 700; font-size: 14px; letter-spacing: 1px; color: var(--text-primary); margin-left: 20px; }
-        .btn-close-menu { margin-top: 10px; width: 100%; padding: 16px; border-radius: 16px; border: 1px solid var(--border); background: var(--surface); color: var(--danger); font-family: var(--font-head); font-weight: 900; font-size: 13px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; }
-
-        /* CONFIRM MODAL */
+        /* Modal */
         #customConfirmModal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.75); z-index: 10000; backdrop-filter: blur(4px); align-items: center; justify-content: center; }
         #customConfirmModal.show { display: flex; }
         .confirm-dialog { background: var(--surface); border: 2px solid var(--border-strong); border-radius: 16px; padding: 16px; max-width: 280px; width: 90%; }
@@ -204,12 +201,14 @@
         .confirm-btn { padding: 10px; border-radius: 10px; font-family: var(--font-head); font-size: 13px; font-weight: 800; border: 2px solid; cursor: pointer; }
         .confirm-btn-cancel { background: transparent; border-color: var(--border-strong); color: var(--text-secondary); }
         .confirm-btn-accept { background: var(--brand); border-color: var(--brand); color: #fff; }
-
-        /* Layout Desktop */
-        @media (min-width: 768px) {
-            .panels-wrapper { display: none !important; }
-            #layout-container { display: grid; grid-template-columns: 25% 50% 25%; }
-        }
+        
+        /* Nav Menu */
+        #navModal { position: fixed; inset: 0; background: rgba(0,0,0,0.85); backdrop-filter: blur(8px); z-index: 2000; display: none; justify-content: center; align-items: center; padding-top: var(--safe-top); }
+        .nav-content { background: var(--surface); width: 85%; max-width: 320px; border-radius: 30px; padding: 35px 25px; border: 1px solid var(--border); box-shadow: 0 30px 60px rgba(0,0,0,0.6); display: flex; flex-direction: column; gap: 15px; }
+        .nav-title { font-family: var(--font-head); font-size: 18px; margin-bottom: 10px; color: var(--brand); text-align: center; font-weight: 900; letter-spacing: 2px; }
+        .nav-item { display: flex; align-items: center; padding: 20px; border-radius: 18px; background: rgba(255,255,255,0.02); border: 1px solid var(--border); cursor: pointer; transition: 0.3s; }
+        .nav-text { font-family: var(--font-head); font-weight: 700; font-size: 14px; letter-spacing: 1px; color: var(--text-primary); margin-left: 20px; }
+        .btn-close-menu { margin-top: 10px; width: 100%; padding: 16px; border-radius: 16px; border: 1px solid var(--border); background: var(--surface); color: var(--danger); font-family: var(--font-head); font-weight: 900; font-size: 13px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; }
     </style>
 </head>
 <body onload="init()">
@@ -228,10 +227,10 @@
     <div id="navModal" onclick="if(event.target===this) closeMenuViaButton()">
         <div class="nav-content">
             <div class="nav-title">MENÚ C5X</div>
-            <div class="nav-item selected anim-click" id="nav-operate" onclick="switchView('operate')"><div class="nav-text">OPERAR</div></div>
-            <div class="nav-item anim-click" id="nav-etf" onclick="switchView('etf')"><div class="nav-text">MONITOR ETF</div></div>
-            <div class="nav-item anim-click" id="nav-log" onclick="switchView('log')"><div class="nav-text">BITÁCORA</div></div>
-            <div class="nav-item anim-click" id="nav-settings" onclick="switchView('settings')"><div class="nav-text">AJUSTES</div></div>
+            <div class="nav-item selected anim-click" onclick="switchView('operate')"><div class="nav-text">OPERAR</div></div>
+            <div class="nav-item anim-click" onclick="switchView('etf')"><div class="nav-text">MONITOR ETF</div></div>
+            <div class="nav-item anim-click" onclick="switchView('log')"><div class="nav-text">BITÁCORA</div></div>
+            <div class="nav-item anim-click" onclick="switchView('settings')"><div class="nav-text">AJUSTES</div></div>
             <button class="btn-close-menu anim-click" onclick="closeMenuViaButton()">CERRAR MENÚ</button>
         </div>
     </div>
@@ -274,13 +273,7 @@
                                 
                                 <input type="text" id="coinInput" style="display:none">
                                 <input type="number" id="capitalInput" style="display:none">
-                                <div id="dashMain" class="dashboard-card" style="display:none">
-                                    <input id="baseInput" value="0">
-                                    <span id="resInv">$0</span><span id="resAvg">0</span><span id="resTarget">0</span><span id="resProfit">0</span>
-                                    <div id="dashTradingCoin"></div><div id="dashWallet"></div>
-                                    <div id="tradingModeBtn"></div>
-                                </div>
-
+                                
                                 <div class="cols-container">
                                     <div class="left-col">
                                         <main id="levelsGrid" class="levels-container"></main>
@@ -309,10 +302,11 @@
                     
                     <div class="panel" id="panel2">
                         <div class="panel-content" style="padding: 0; display: flex; flex-direction: column; height: 100%;">
-                            <div style="padding:8px 10px; text-align:center; font-family:'Orbitron'; font-size:14px; color:var(--brand); background:var(--bg); border-bottom:1px solid var(--border);">
-                                GRÁFICO EXTENDIDO <span id="p3_symbol" style="color:var(--text-primary); margin-left:5px; font-weight:800;">---</span>
+                            <div id="tv_chart_p3" class="chart-wrapper" style="margin: 4px; height: 280px;">
+                                </div>
+                            <div style="flex:1; display:flex; align-items:center; justify-content:center; color:var(--text-tertiary); font-family:var(--font-head); font-size:12px;">
+                                ESPACIO DISPONIBLE
                             </div>
-                            <div id="tv_chart_p3" class="chart-wrapper" style="margin: 0; flex: 1; border-radius: 0; border: none; width:100%; height:100%;"></div>
                         </div>
                     </div>
                     
@@ -333,7 +327,7 @@
 
     <script>
         // ==========================================
-        // CONFIGURACIÓN INICIAL Y ESTADO
+        // CONFIGURACIÓN INICIAL
         // ==========================================
         let isLight = localStorage.getItem('theme') === 'light';
         let slots = JSON.parse(localStorage.getItem('c5x_slots_real') || '[]');
@@ -343,7 +337,6 @@
         let chartSymbol = '';
         let activeOrders = JSON.parse(localStorage.getItem('c5x_active_orders_real') || '{}');
         let availableUSDT = 1000.00;
-        let globalCapital = parseFloat(localStorage.getItem('c5x_global_capital')) || 0;
         let strategyParams = JSON.parse(localStorage.getItem('c5x_strategy_params')) || { normal: { capital: 5, roi: 100, inc: 7, desc: 17, dd: 17 } };
         let tvWidget1 = null;
         let tvWidget2 = null;
@@ -351,7 +344,6 @@
         let currentPanel = 0;
         let panelTouchStartX = 0;
         let panelTouchStartY = 0;
-        let allGateETFs = [];
         let tradingMode = localStorage.getItem('c5x_trading_mode') || 'manual';
 
         // ==========================================
@@ -364,7 +356,7 @@
             selectSlot(activeIdx);
             renderNav();
             
-            // 2. Generar Dashboards en Panel 2
+            // 2. Generar Dashboards en Panel 2 (6 CLONES)
             renderMultiDashboards();
             
             // 3. Configurar UI
@@ -379,18 +371,18 @@
         }
 
         // ==========================================
-        // LÓGICA PANEL 2: DASHBOARDS MÚLTIPLES
+        // LÓGICA PANEL 2: DASHBOARDS MÚLTIPLES (CLONADOS)
         // ==========================================
         function renderMultiDashboards() {
             const container = document.getElementById('multiDashContainer');
             container.innerHTML = '';
             
-            // Generar 6 Dashboards (Slot 0 al 5) usando el diseño original "well done"
+            // Generar 6 Dashboards idénticos al diseño original
             for(let i=0; i<6; i++) {
                 const s = slots[i];
                 const isActive = (i === activeIdx) ? 'border-color:var(--brand); box-shadow:0 0 15px rgba(59,130,246,0.15);' : '';
                 
-                // HTML duplicado del dashboard original, IDs sufijados con _s{i}
+                // HTML EXACTO DEL DASHBOARD ORIGINAL REPLICADO 6 VECES
                 const html = `
                 <div class="dashboard-card" style="margin:0; ${isActive}" onclick="selectSlot(${i})">
                     <div class="dash-header-new">
@@ -411,12 +403,29 @@
                             <span class="stat-val" id="resInv_s${i}">$0</span>
                         </div>
                         <div class="stat-box-unified">
+                            <span class="stat-lbl">PROMEDIO</span>
+                            <span class="stat-val" id="resAvg_s${i}">0.00</span>
+                        </div>
+                    </div>
+                    
+                    <div class="target-and-strategies-row">
+                        <div class="strategy-option-compact mode-normal">
+                            <span>NORMAL</span>
+                        </div>
+                        <div class="dash-target-bar-compact">
+                            <div class="target-center">
+                                <span class="stat-lbl" style="color:var(--warning);">OBJETIVO</span>
+                                <span class="stat-val" id="resTarget_s${i}">0.00</span>
+                            </div>
+                        </div>
+                        <div class="stat-box-unified">
                             <span class="stat-lbl">GANANCIA</span>
-                            <span class="stat-val" id="resProfit_s${i}">$0</span>
+                            <span class="stat-val green" id="resProfit_s${i}">$0.00</span>
                         </div>
                     </div>
                     
                     <div class="dash-controls-unified">
+                         <div class="btn-mini-control" onclick="toggleLevelsVisibilityExplicit()"><svg width="20" height="20" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg></div>
                         <div class="trading-manual-btn" id="modeBtn_s${i}" onclick="toggleModeForSlot(${i}, event)">
                             <span id="modeTxt_s${i}">MANUAL</span>
                         </div>
@@ -439,15 +448,19 @@
                     coinEl.textContent = s.name || 'VACÍO';
                     coinEl.style.color = getCoinColor(s.name);
                 }
-                // Precio Base (solo si no está en foco)
+                // Precio Base
                 const baseEl = document.getElementById(`baseInput_s${i}`);
                 if(baseEl && document.activeElement !== baseEl) baseEl.value = s.price || '';
                 
                 // Cálculos
                 const stats = calculateSlotStats(i);
                 document.getElementById(`resInv_s${i}`).textContent = `$${stats.invested.toFixed(0)}`;
+                document.getElementById(`resAvg_s${i}`).textContent = stats.avg.toFixed(4);
                 
-                // Profit Estimado (Simulado con ticker actual o precio base)
+                const target = stats.avg * (1 + (s.roi/100));
+                document.getElementById(`resTarget_s${i}`).textContent = target.toFixed(4);
+                
+                // Profit Estimado
                 const currentP = (i === activeIdx && document.getElementById('t-price')) 
                                ? parseFloat(document.getElementById('t-price').textContent) 
                                : s.price;
@@ -463,7 +476,7 @@
                     profitEl.style.color = 'var(--text-tertiary)';
                 }
                 
-                // Botón Manual/Auto (Simulado visual)
+                // Botón Manual/Auto
                 const modeBtn = document.getElementById(`modeBtn_s${i}`);
                 if(tradingMode === 'auto' && i === activeIdx) {
                     modeBtn.classList.add('auto-mode');
@@ -481,15 +494,14 @@
                 slots[idx].price = price;
                 if(!slots[idx].initialPrice) slots[idx].initialPrice = price;
                 save();
-                if(idx === activeIdx) renderLevels(); // Actualizar panel 1 si es el activo
+                if(idx === activeIdx) renderLevels(); 
                 showToast(`Precio Slot ${idx+1} guardado`);
             }
         }
 
         function toggleModeForSlot(idx, e) {
-            e.stopPropagation(); // Evitar seleccionar slot al tocar botón
-            if(idx !== activeIdx) selectSlot(idx); // Seleccionar primero
-            // Lógica simple de toggle global por ahora
+            e.stopPropagation(); 
+            if(idx !== activeIdx) selectSlot(idx); 
             tradingMode = (tradingMode === 'manual') ? 'auto' : 'manual';
             localStorage.setItem('c5x_trading_mode', tradingMode);
             updateMultiDashStats();
@@ -523,7 +535,8 @@
                     qty += d.qty;
                 }
             }
-            return { invested, qty };
+            const avg = qty > 0 ? invested / qty : 0;
+            return { invested, qty, avg };
         }
 
         // ==========================================
@@ -533,16 +546,13 @@
             if (panelIndex < 0 || panelIndex > 2) return;
             currentPanel = panelIndex;
             
-            // Mover contenedor
             const container = document.getElementById('panelsContainer');
             if (container) container.setAttribute('data-active', panelIndex);
             
-            // Dots
             document.querySelectorAll('.panel-dot').forEach((dot, idx) => {
                 dot.classList.toggle('active', idx === panelIndex);
             });
             
-            // Header Dinámico
             const tickerCont = document.getElementById('tickerContainer');
             const usdtCont = document.getElementById('usdtContainer');
             const tfBar = document.getElementById('tfBarContainer');
@@ -561,7 +571,7 @@
                 if(usdtCont) usdtCont.style.display = '';
                 if(tfBar) tfBar.style.display = 'grid';
                 updateUSDT();
-                if(chartSymbol) loadChart(chartSymbol); // Recargar chart panel 3
+                if(chartSymbol) loadChart(chartSymbol); 
             }
         }
         
@@ -585,24 +595,21 @@
         function updateUSDT() { document.getElementById('usdtAvailable').textContent = '$' + availableUSDT.toFixed(2); }
 
         // ==========================================
-        // LÓGICA PRINCIPAL (PANEL 1 + COMUNES)
+        // LÓGICA PRINCIPAL
         // ==========================================
         function selectSlot(i) {
             activeIdx = i;
             localStorage.setItem('c5x_last_slot', i);
             const s = slots[i];
             
-            // Actualizar Panel 1 UI
             document.getElementById('coinInput').value = s.name;
-            document.getElementById('baseInput').value = s.price;
+            document.getElementById('capitalInput').value = s.capital;
+            
             chartSymbol = s.name ? s.name + "USDT" : "BTCUSDT";
-            document.getElementById('p3_symbol').textContent = s.name || "---"; // Titulo Panel 3
             
             renderLevels();
             renderNav();
-            loadChart(s.name); // Carga ambos charts
-            
-            // Resaltar en Panel 2
+            loadChart(s.name);
             renderMultiDashboards();
         }
         
@@ -622,7 +629,6 @@
             const theme = isLight ? "light" : "dark";
             const bg = isLight ? "#F2F0E9" : "#0b0e11";
             
-            // Limpiar anteriores
             if(tvWidget1) { try{ tvWidget1.remove(); }catch(e){} }
             if(tvWidget2) { try{ tvWidget2.remove(); }catch(e){} }
 
@@ -639,15 +645,11 @@
             };
 
             if(typeof TradingView !== 'undefined') {
-                // Instancia Panel 1 (Pequeña)
+                // Instancia Panel 1
                 tvWidget1 = new TradingView.widget({ ...config, "container_id": "tv_chart" });
                 
-                // Instancia Panel 3 (Grande/Full) - Misma moneda
-                tvWidget2 = new TradingView.widget({ 
-                    ...config, 
-                    "container_id": "tv_chart_p3",
-                    "hide_top_toolbar": false // Permitir herramientas en full chart
-                });
+                // Instancia Panel 3 (Clon exacto)
+                tvWidget2 = new TradingView.widget({ ...config, "container_id": "tv_chart_p3" });
             }
         }
         
@@ -656,11 +658,11 @@
             localStorage.setItem('c5x_last_tf', tf);
             document.querySelectorAll('.tf-btn').forEach(b => b.classList.remove('active'));
             if(btn) btn.classList.add('active');
-            loadChart(chartSymbol); // Recarga ambos
+            loadChart(chartSymbol); 
         }
 
         // ==========================================
-        // UTILIDADES Y CÁLCULOS LEGACY
+        // UTILIDADES Y CALCULOS
         // ==========================================
         function getStepForLevel(strat, i) {
             const params = strategyParams.normal;
@@ -679,7 +681,6 @@
         }
 
         function renderLevels() {
-            // Renderiza niveles en Panel 1
             const grid = document.getElementById('levelsGrid');
             const s = slots[activeIdx];
             if(!s.name) { grid.innerHTML = '<div style="text-align:center; padding:20px; opacity:0.5">SELECCIONA MONEDA</div>'; return; }
@@ -714,10 +715,8 @@
             localStorage.setItem('c5x_active_orders_real', JSON.stringify(activeOrders));
             localStorage.setItem('c5x_last_slot', activeIdx);
         }
-
-        // ==========================================
-        // SIMULACIÓN TICKER / RADAR (Para que no esté vacío)
-        // ==========================================
+        
+        // Simulación Radar y Ticker para que no estén vacíos
         function startTickerSystem() {
             setInterval(() => {
                 const s = slots[activeIdx];
@@ -731,14 +730,10 @@
         }
         
         async function fetchAndCalcTopDroppers() {
-            // Simulación Radar
             const el = document.getElementById('radarValue');
             if(el) el.innerHTML = '<span style="font-size:20px; font-weight:800; color:var(--text-primary)">BTC3L</span><br><span style="color:var(--short); font-weight:700">-15.4%</span>';
         }
 
-        // ==========================================
-        // HELPERS UI
-        // ==========================================
         function getCoinColor(n) {
             if(!n) return '#fff';
             if(n.includes('3L') || n.includes('5L')) return 'var(--long)';
@@ -754,6 +749,7 @@
         function openMenuViaButton() { document.getElementById('navModal').style.display = 'flex'; }
         function closeMenuViaButton() { document.getElementById('navModal').style.display = 'none'; }
         function switchView(v) { closeMenuViaButton(); showToast("Sección: " + v); }
+        function toggleLevelsVisibilityExplicit() { showToast("Expandir/Contraer"); }
 
     </script>
 </body>
