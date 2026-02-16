@@ -82,7 +82,7 @@
             overflow: hidden;
         }
 
-        /* PANEL 1: TIMEFRAMES & RADAR (SLOTS ELIMINADOS) */
+        /* PANEL 1: TIMEFRAMES & RADAR */
         .panel-1 {
             padding: 10px;
             border-bottom: 1px solid var(--border);
@@ -129,7 +129,7 @@
             font-weight: bold; 
         }
 
-        /* PANEL 2: MULTI-DASHBOARD GRID (6 DASHBOARDS) */
+        /* PANEL 2: MULTI-DASHBOARD GRID */
         .panel-2 {
             flex: 1;
             overflow-y: auto;
@@ -240,7 +240,7 @@
             font-size: 0.8rem;
         }
 
-        /* PANEL 3: CHART LEVEL 1 (FULL SPACE) */
+        /* PANEL 3: CHART LEVEL 1 */
         .panel-3 {
             height: 45%;
             background: var(--panel-bg);
@@ -654,7 +654,7 @@
 
     <div class="main-container">
         
-        <!-- PANEL 1: TIMEFRAMES & RADAR (SLOTS ELIMINADOS - SIN ESPACIO MUERTO) -->
+        <!-- PANEL 1: TIMEFRAMES & RADAR (SOLO RADAR - SIN SLOTS) -->
         <div class="panel-1">
             <div class="timeframes">
                 <button class="tf-btn">15M</button>
@@ -664,7 +664,7 @@
                 <button class="tf-btn">1D</button>
             </div>
             
-            <!-- RADAR INFO ONLY - NO SLOTS -->
+            <!-- RADAR INFO - SIN LOS SLOTS DE BAJO -->
             <div class="radar-info">
                 <div>RADAR: <span class="radar-val">$0.00</span></div>
                 <div>BASE: <span class="radar-val">$0.00</span></div>
@@ -1034,21 +1034,16 @@
         }
 
         function showSettings(section) {
-            // Hide all panels
             document.querySelectorAll('.settings-panel').forEach(panel => {
                 panel.classList.remove('active');
             });
             
-            // Show selected panel
             const targetPanel = document.getElementById('settings-' + section);
             if (targetPanel) {
                 targetPanel.classList.add('active');
             }
             
-            // Open settings modal
             document.getElementById('settingsModal').style.display = 'flex';
-            
-            // Close menu
             document.getElementById('menuOverlay').classList.remove('active');
         }
 
@@ -1089,7 +1084,6 @@
             document.getElementById('modalPair').innerText = pair + '_USDT';
             document.getElementById('tradeModal').style.display = 'flex';
             
-            // Update total when price or qty changes
             document.getElementById('modalPrice').addEventListener('input', updateTotal);
             document.getElementById('modalQty').addEventListener('input', updateTotal);
         }
@@ -1197,7 +1191,6 @@
                 document.querySelectorAll('.tf-btn').forEach(b => b.classList.remove('active'));
                 this.classList.add('active');
                 
-                // Update chart interval based on timeframe
                 let interval = '60';
                 switch(this.innerText) {
                     case '15M': interval = '15'; break;
@@ -1207,7 +1200,6 @@
                     case '1D': interval = 'D'; break;
                 }
                 
-                // Note: In production, you would update the TradingView widget interval
                 showNotification('📊 Temporalidad cambiada a ' + this.innerText);
             });
         });
@@ -1254,7 +1246,6 @@
         // KEYBOARD SHORTCUTS
         // ============================================
         document.addEventListener('keydown', function(e) {
-            // ESC to close modals
             if (e.key === 'Escape') {
                 closeModal();
                 closeLiquidateModal();
