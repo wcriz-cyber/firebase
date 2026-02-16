@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>C5X</title>
-    <meta name="theme-color" content="#111b21">
+    <meta name="theme-color" content="#0b0e11">
     <link rel="manifest" href="manifest.json">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="mobile-web-app-capable" content="yes">
@@ -20,46 +20,48 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
 
     <style>
-        /* TEMA WHATSAPP - SOLO COLORES Y FUENTES */
+        /* CONFIGURACIÓN DE FUENTES: TODO ORBITRON EXCEPTO NÚMEROS */
         :root { 
-            --bg: #111b21; 
-            --surface: #1f2c33; 
-            --surface-glass: #111b21; 
-            --card-bg: #1f2c33; 
-            --border: #2a3942; 
-            --border-strong: #3d4a52; 
-            --text-primary: #e9edef; 
-            --text-secondary: #8696a0; 
-            --text-tertiary: #667781; 
-            --brand: #00a884; 
-            --long: #00a884; 
-            --short: #dd5246; 
-            --warning: #e09e4b; 
-            --danger: #dd5246; 
-            --zone-gold: #e09e4b; 
-            --zone-hot: #dd5246; 
-            --zone-warm: #8696a0; 
+            --bg: #0a0e13; 
+            --surface: #141922; 
+            --surface-glass: #0a0e13; 
+            --card-bg: rgba(255, 255, 255, 0.03); 
+            --border: #2b3139; 
+            --border-strong: #3d4451; 
+            --text-primary: #e5e7eb; 
+            --text-secondary: #9ca3af; 
+            --text-tertiary: #6b7280; 
+            --brand: #3b82f6; 
+            --long: #10b981; 
+            --short: #ef4444; 
+            --warning: #f59e0b; 
+            --danger: #dc2626; 
+            --zone-gold: #f59e0b; 
+            --zone-hot: #fb923c; 
+            --zone-warm: #94a3b8; 
             --radius-m: 16px; 
-            --chart-bg: #0b141a; 
+            --chart-bg: #000000; 
             --safe-top: env(safe-area-inset-top, 20px); 
             --safe-bottom: env(safe-area-inset-bottom, 20px); 
             --skeleton: rgba(255,255,255,0.05); 
             
-            /* FUENTES WHATSAPP */
-            --font-main: 'Segoe UI', 'Helvetica Neue', Helvetica, Arial, sans-serif; 
-            --font-head: 'Segoe UI', 'Helvetica Neue', Helvetica, Arial, sans-serif; 
-            --font-num: 'Segoe UI', 'Helvetica Neue', Helvetica, Arial, sans-serif; 
+            /* FUENTE PRINCIPAL Y TITULOS: ORBITRON */
+            --font-main: 'Orbitron', sans-serif; 
+            --font-head: 'Orbitron', sans-serif; 
+            
+            /* FUENTE NUMERICA: JETBRAINS MONO (Para mantener estructura) */
+            --font-num: 'JetBrains Mono', monospace; 
             
             --fs-set-title: 14px; 
             --fs-set-label: 11px; 
             --fs-set-input: 16px; 
         }
         
-        body.light-mode { --bg: #ffffff; --surface: #f0f2f5; --surface-glass: #ffffff; --card-bg: #ffffff; --border: #e9edef; --border-strong: #d1d7db; --text-primary: #111b21; --text-secondary: #667781; --text-tertiary: #8696a0; --chart-bg: #f0f2f5; --skeleton: rgba(0,0,0,0.06); --short: #dd5246; --danger: #dd5246; --long: #00a884; --brand: #00a884; --warning: #e09e4b; --zone-gold: #e09e4b; --zone-hot: #dd5246; --zone-warm: #667781; }
+        body.light-mode { --bg: #F2F0E9; --surface: #E8E6DF; --surface-glass: #F2F0E9; --card-bg: rgba(160, 150, 140, 0.08); --border: #D6D2C8; --border-strong: #BFBBB0; --text-primary: #4A453E; --text-secondary: #7A756D; --text-tertiary: #9E9890; --chart-bg: #F2F0E9; --skeleton: rgba(0,0,0,0.06); --short: #C87965; --danger: #C87965; --long: #6F9C76; --brand: #5C7C8A; --warning: #D99E4B; --zone-gold: #D99E4B; --zone-hot: #C87965; --zone-warm: #8C99A6; }
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; outline: none; }
         
-        /* APLICAR FUENTES WHATSAPP AL BODY */
-        body { font-family: var(--font-main); font-weight: 400; background: var(--bg); color: var(--text-primary); padding-top: var(--safe-top); padding-bottom: calc(20px + var(--safe-bottom)); overflow-x: hidden; user-select: none; font-size: 16px; overscroll-behavior-y: none; transition: background 0.3s ease, color 0.3s ease; }
+        /* APLICAMOS ORBITRON AL BODY */
+        body { font-family: var(--font-main); font-weight: 500; background: var(--bg); color: var(--text-primary); padding-top: var(--safe-top); padding-bottom: calc(20px + var(--safe-bottom)); overflow-x: hidden; user-select: none; font-size: 16px; overscroll-behavior-y: none; transition: background 0.3s ease, color 0.3s ease; letter-spacing: 0.5px; }
         
         /* ... ESTILOS EXISTENTES ... */
         .bot-section { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-m); padding: 10px; margin-bottom: 8px; }
@@ -176,94 +178,8 @@
         .slot-card.active::after { content: ''; position: absolute; bottom: 0; left: 25%; right: 25%; height: 3px; background: var(--brand); border-radius: 3px 3px 0 0; }
         .slot-card.has-profit:not(.active)::before { content: '•'; position: absolute; bottom: 2px; left: 0; right: 0; color: var(--long); font-size: 14px; line-height: 0; }
         
-        .chart-wrapper { height: 320px; background: var(--chart-bg); margin: 0 10px 6px 10px; border-radius: var(--radius-m); border: 1px solid var(--border); overflow: hidden; position: relative; }
+        .chart-wrapper { height: 280px; background: var(--chart-bg); margin: 0 10px 6px 10px; border-radius: var(--radius-m); border: 1px solid var(--border); overflow: hidden; position: relative; }
         .chart-wrapper.fullscreen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 5000; margin: 0; border-radius: 0; border: none; padding-top: var(--safe-top); padding-bottom: var(--safe-bottom); background: var(--bg); }
-        
-        /* DASHBOARD GENERAL - Panel 1 - COMPACTO */
-        .general-dashboard {
-            padding: 8px 12px;
-        }
-        
-        .general-stats-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 6px;
-            margin-bottom: 8px;
-        }
-        
-        .general-stat-card {
-            background: var(--card-bg);
-            border: 1px solid var(--border);
-            border-radius: 10px;
-            padding: 8px 10px;
-            text-align: center;
-        }
-        
-        .general-stat-label {
-            font-size: 10px;
-            color: var(--text-tertiary);
-            text-transform: uppercase;
-            margin-bottom: 4px;
-            letter-spacing: 0.3px;
-        }
-        
-        .general-stat-value {
-            font-size: 18px;
-            font-weight: 700;
-            color: var(--text-primary);
-            font-family: var(--font-num);
-            line-height: 1;
-        }
-        
-        .general-stat-value.positive {
-            color: var(--long);
-        }
-        
-        .general-stat-value.negative {
-            color: var(--short);
-        }
-        
-        .general-summary {
-            background: var(--card-bg);
-            border: 1px solid var(--border);
-            border-radius: 10px;
-            padding: 8px 10px;
-            margin-bottom: 8px;
-        }
-        
-        .general-summary-title {
-            font-size: 10px;
-            color: var(--text-secondary);
-            text-transform: uppercase;
-            margin-bottom: 6px;
-            letter-spacing: 0.3px;
-            font-weight: 600;
-        }
-        
-        .general-summary-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 4px 0;
-            border-bottom: 1px solid var(--border);
-        }
-        
-        .general-summary-row:last-child {
-            border-bottom: none;
-            padding-bottom: 0;
-        }
-        
-        .general-summary-label {
-            font-size: 11px;
-            color: var(--text-tertiary);
-        }
-        
-        .general-summary-value {
-            font-size: 12px;
-            font-weight: 600;
-            color: var(--text-primary);
-            font-family: var(--font-num);
-        }
         .price-lines-overlay { position: absolute; top: 0; left: 0; right: 0; bottom: 0; pointer-events: none; z-index: 10; }
         .price-line { position: absolute; left: 0; right: 0; height: 2px; display: flex; align-items: center; }
         .price-line.avg-line { background: linear-gradient(90deg, transparent, rgba(92, 124, 138, 0.5) 5%, rgba(92, 124, 138, 0.5) 95%, transparent); }
@@ -968,92 +884,40 @@
             border-color: var(--brand);
             color: #fff;
         }
-        
-        /* BOTÓN FLOTANTE REDONDO - Solo en vista OPERAR */
-        .fab-etf {
-            position: fixed;
-            bottom: 80px;
-            right: 20px;
-            width: 56px;
-            height: 56px;
-            border-radius: 50%;
-            background: var(--brand);
-            color: white;
-            border: none;
-            cursor: pointer;
-            display: none;
-            align-items: center;
+
+        /* --- CORRECCIONES C5X USER REQUEST --- */
+
+        /* 1. Ocultar barras de temporalidad y slots (Espacio muerto) */
+        #tfBarContainer { display: none !important; }
+        #slotNav { display: none !important; }
+
+        /* 2. Ajustar el espaciado del contenido para que suba (ya que no hay barras) */
+        .content-spacer { margin-top: 60px !important; }
+        @media (min-width: 768px) {
+            .content-spacer { margin-top: 60px !important; }
+            #layout-container { height: calc(100vh - 65px) !important; }
+        }
+
+        /* 3. Estilo profesional para el Ticker de Saldo */
+        #mainTickerPill {
+            background: rgba(16, 185, 129, 0.1);
+            border-color: var(--long);
+            width: auto;
+            min-width: 160px;
+        }
+        #t-sym { color: var(--text-tertiary); font-size: 11px; }
+        #t-price { color: var(--long); font-size: 18px; text-shadow: 0 0 10px rgba(16, 185, 129, 0.2); }
+        #t-dot { background: var(--long) !important; box-shadow: 0 0 8px var(--long); }
+        .ticker-pct { display: none !important; } /* Ocultar porcentaje en el header */
+
+        /* 4. Ajustar altura del Radar para que se vea mejor */
+        .radar-ticker-large {
+            min-height: 100px;
             justify-content: center;
-            font-size: 32px;
-            font-weight: 300;
-            box-shadow: 0 4px 12px rgba(0, 168, 132, 0.4);
-            z-index: 999;
-            transition: all 0.3s ease;
-            line-height: 1;
-        }
-        
-        .fab-etf:active {
-            transform: scale(0.95);
-        }
-        
-        .fab-etf.show {
-            display: flex;
-        }
-        
-        /* PANELES DESLIZABLES */
-        .panels-wrapper {
-            position: relative;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-        }
-        
-        .panels-container {
-            display: flex;
-            width: 300%; /* 3 paneles */
-            height: 100%;
-            transition: transform 0.3s ease-out;
-            will-change: transform;
-        }
-        
-        .panel {
-            width: 33.333%; /* 100% / 3 paneles */
-            flex-shrink: 0;
-            height: 100%;
-            overflow-y: auto;
-        }
-        
-        /* INDICADOR DE PANELES */
-        .panels-indicator {
-            position: fixed;
-            bottom: calc(60px + var(--safe-bottom));
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            gap: 8px;
-            padding: 8px 16px;
-            background: var(--surface);
-            border-radius: 20px;
-            z-index: 998;
-            border: 1px solid var(--border);
-        }
-        
-        .panel-dot {
-            width: 32px;
-            height: 3px;
-            background: var(--border);
-            border-radius: 2px;
-            transition: all 0.3s ease;
-        }
-        
-        .panel-dot.active {
-            background: var(--brand);
-            width: 40px;
         }
     </style>
 </head>
 <body onload="init()">
-    <!-- Modal de Confirmación Personalizado -->
     <div id="customConfirmModal">
         <div class="confirm-dialog">
             <div class="confirm-title" id="confirmTitle">¿Comprar nivel?</div>
@@ -1066,17 +930,6 @@
     </div>
     <audio id="alertSound" preload="auto" src="data:audio/wav;base64,UklGRl9vT1BXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YU"></audio>
     <div id="toast">Notificación</div>
-    
-    <!-- BOTÓN FLOTANTE REDONDO - Solo aparece en OPERAR -->
-    <button class="fab-etf" id="fabEtf" onclick="switchView('etf')">+</button>
-    
-    <!-- INDICADOR DE PANELES - Solo visible en OPERAR -->
-    <div class="panels-indicator" id="panelsIndicator" style="display: none;">
-        <div class="panel-dot active" data-panel="0"></div>
-        <div class="panel-dot" data-panel="1"></div>
-        <div class="panel-dot" data-panel="2"></div>
-    </div>
-    
     <div id="navModal" onclick="if(event.target===this) closeMenuViaButton()">
         <div class="nav-content section-enter">
             <div class="nav-title">MENÚ C5X</div>
@@ -1104,80 +957,19 @@
     </div>
     <div class="content-spacer">
         <div id="section-operate" class="app-section active">
-            <div class="panels-wrapper">
-                <div class="panels-container" id="panelsContainer">
-                    <!-- PANEL 1 - Dashboard General -->
-                    <div class="panel" id="panel1">
-                        <div id="tv_chart" class="chart-wrapper"><div id="priceLinesOverlay" class="price-lines-overlay"></div><div class="chart-fs-btn anim-click" onclick="toggleFullscreenChart(event)"><svg width="18" height="18" viewBox="0 0 24 24"><polyline points="15 3 21 3 21 9"></polyline><polyline points="9 21 3 21 3 15"></polyline><line x1="21" y1="3" x2="14" y2="10"></line><line x1="3" y1="21" x2="10" y2="14"></line></svg></div></div>
-                        
-                        <div id="radarTickerContainer" class="radar-ticker-large anim-pulse" style="margin: 0 10px 6px 10px;">
-                            <div id="radarStatus" class="radar-status-dot offline"></div>
-                            <div class="radar-header-line">
-                                <div class="radar-title-compact" onclick="switchView('etf'); event.stopPropagation();" style="cursor: pointer;">
-                                    <svg width="16" height="16" viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg> 
-                                    RADAR
-                                </div>
-                                <div id="radarValue" class="radar-token-centered"><span class="skeleton-text skeleton-box" style="width:80px; height:18px;"></span></div>
-                                <div class="radar-balance-compact" id="totalBalanceDisplay">$0.00</div>
-                            </div>
-                        </div>
-                        
-                        <div class="general-dashboard">
-                            <div class="general-stats-grid">
-                                <div class="general-stat-card">
-                                    <div class="general-stat-label">Capital Total</div>
-                                    <div class="general-stat-value" id="generalCapital">$0.00</div>
-                                </div>
-                                <div class="general-stat-card">
-                                    <div class="general-stat-label">PNL Total</div>
-                                    <div class="general-stat-value positive" id="generalPnl">$0.00</div>
-                                </div>
-                                <div class="general-stat-card">
-                                    <div class="general-stat-label">Win Rate</div>
-                                    <div class="general-stat-value" id="generalWinRate">0%</div>
-                                </div>
-                                <div class="general-stat-card">
-                                    <div class="general-stat-label">Operaciones</div>
-                                    <div class="general-stat-value" id="generalOps">0</div>
-                                </div>
-                            </div>
-                            
-                            <div class="general-summary">
-                                <div class="general-summary-title">Resumen del Mes</div>
-                                <div class="general-summary-row">
-                                    <span class="general-summary-label">Ganancia Mes</span>
-                                    <span class="general-summary-value" id="generalMonthProfit">$0.00</span>
-                                </div>
-                                <div class="general-summary-row">
-                                    <span class="general-summary-label">Mejor Operación</span>
-                                    <span class="general-summary-value" id="generalBestTrade">$0.00</span>
-                                </div>
-                                <div class="general-summary-row">
-                                    <span class="general-summary-label">Operaciones Activas</span>
-                                    <span class="general-summary-value" id="generalActiveSlots">0</span>
-                                </div>
-                            </div>
-                            
-                            <div id="etfMonitorToggleBtn" class="etf-monitor-toggle-btn" onclick="toggleETFMonitor()"><svg width="16" height="16" viewBox="0 0 24 24" style="margin-right: 8px;"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="6"></circle><circle cx="12" cy="12" r="2"></circle></svg><span id="etfMonitorToggleText">MONITOR ETF</span><div class="toggle-icon" id="etfToggleIcon">▼</div></div>
-                            <div id="desktop-etf-list"></div>
-                        </div>
-                    </div>
-                    
-                    <!-- PANEL 2 - Trading (Slots + Dashboard + Niveles) -->
-                    <div class="panel" id="panel2">
-                        <nav id="slotNav" class="slot-nav" style="position: relative; top: 0; padding-top: 4px;"></nav>
-                        
-                        <!-- Inputs ocultos para compatibilidad -->
+            <div id="layout-container">
+                <nav id="slotNav" class="slot-nav"></nav>
+                <div id="tv_chart" class="chart-wrapper"><div id="priceLinesOverlay" class="price-lines-overlay"></div><div class="chart-fs-btn anim-click" onclick="toggleFullscreenChart(event)"><svg width="18" height="18" viewBox="0 0 24 24"><polyline points="15 3 21 3 21 9"></polyline><polyline points="9 21 3 21 3 15"></polyline><line x1="21" y1="3" x2="14" y2="10"></line><line x1="3" y1="21" x2="10" y2="14"></line></svg></div></div>
+                <div class="cols-container">
+                    <div class="left-col">
                         <input type="text" id="coinInput" style="display: none;" readonly>
                         <input type="number" id="capitalInput" style="display: none;">
-                        
-                        <div id="dashMain" class="dashboard-card" style="margin: 0 10px 6px 10px;">
+                        <div id="dashMain" class="dashboard-card">
                             <div class="dash-header-new">
                                 <div id="dashTradingCoin" class="dash-coin-title">---</div>
                                 <div id="dashWallet" class="dash-wallet-display">$0.00</div>
                             </div>
                             
-                            <!-- Fila 1: Precio Base | Inversión | Promedio -->
                             <div class="dash-stats-matrix">
                                 <div class="dash-input-box" id="basePriceBox" ontouchstart="startBasePricePress(event)" ontouchend="cancelBasePricePress()" onmousedown="startBasePricePress(event)" onmouseup="cancelBasePricePress()" onmouseleave="cancelBasePricePress()">
                                     <span class="stat-lbl">BASE</span>
@@ -1194,7 +986,6 @@
                                 </div>
                             </div>
                             
-                            <!-- Fila 2: Estrategia | Objetivo | Ganancia -->
                             <div class="target-and-strategies-row">
                                 <div class="strategy-option-compact mode-normal" id="strategyToggle" ontouchstart="startStrategyTogglePress(event)" ontouchend="endStrategyTogglePress(event)" onmousedown="startStrategyTogglePress(event)" onmouseup="endStrategyTogglePress(event)" onmouseleave="cancelStrategyTogglePress()">
                                     <span id="strategyLabel">NORMAL</span>
@@ -1211,36 +1002,27 @@
                                 </div>
                             </div>
                             
-                            <!-- Fila 3: Controles -->
                             <div class="dash-controls-unified"><div class="btn-mini-control btn-toggle-levels" onclick="toggleLevelsVisibilityExplicit()" id="btnToggleLevels"><svg width="20" height="20" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg></div><div class="trading-manual-btn anim-click" id="tradingModeBtn" ontouchstart="startTradingPress(event)" ontouchend="cancelTradingPress(event)" onmousedown="startTradingPress(event)" onmouseup="cancelTradingPress(event)" onmouseleave="cancelTradingPress(event)"><div style="display:flex; align-items:center; gap:6px;"><svg width="16" height="16" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg><span id="tradingModeText">MANUAL</span></div><span class="mode-indicator" id="tradingModeIndicator" style="font-size:9px; margin:0;">ESPERANDO</span></div><div class="btn-mini-control" id="btnClearSlot" ontouchstart="startClearSlotPress(event)" ontouchend="cancelClearSlotPress(event)" onmousedown="startClearSlotPress(event)" onmouseup="cancelClearSlotPress(event)" onmouseleave="cancelClearSlotPress()" title="Mantén presionado para limpiar slot" style="background: rgba(239, 68, 68, 0.1); color: var(--danger); border-color: var(--danger);"><svg width="20" height="20" viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2-2v2"></path></svg></div></div>
                         </div>
-                        
-                        <main id="levelsGrid" class="levels-container" style="margin: 0 10px;"></main>
+                        <main id="levelsGrid" class="levels-container"></main>
                     </div>
-                    
-                    <!-- PANEL 2 - Vacío por ahora -->
-                    <div class="panel" id="panel2">
-                        <div style="display: flex; align-items: center; justify-content: center; height: 100%; color: var(--text-tertiary);">
-                            <div style="text-align: center;">
-                                <div style="font-size: 48px; margin-bottom: 16px;">📊</div>
-                                <div style="font-size: 16px;">Panel 2</div>
-                                <div style="font-size: 12px; margin-top: 8px;">Próximamente</div>
+                    <div class="right-col">
+                        <div id="radarTickerContainer" class="radar-ticker-large anim-pulse">
+                            <div id="radarStatus" class="radar-status-dot offline"></div>
+                            <div class="radar-header-line">
+                                <div class="radar-title-compact" onclick="switchView('etf'); event.stopPropagation();" style="cursor: pointer;">
+                                    <svg width="16" height="16" viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg> 
+                                    RADAR
+                                </div>
+                                <div id="radarValue" class="radar-token-centered"><span class="skeleton-text skeleton-box" style="width:80px; height:18px;"></span></div>
+                                <div class="radar-balance-compact" id="totalBalanceDisplay">$0.00</div>
                             </div>
                         </div>
-                    </div>
-                    
-                    <!-- PANEL 3 - Vacío por ahora -->
-                    <div class="panel" id="panel3">
-                        <div style="display: flex; align-items: center; justify-content: center; height: 100%; color: var(--text-tertiary);">
-                            <div style="text-align: center;">
-                                <div style="font-size: 48px; margin-bottom: 16px;">📈</div>
-                                <div style="font-size: 16px;">Panel 3</div>
-                                <div style="font-size: 12px; margin-top: 8px;">Próximamente</div>
-                            </div>
-                        </div>
+                        <div id="etfMonitorToggleBtn" class="etf-monitor-toggle-btn" onclick="toggleETFMonitor()"><svg width="16" height="16" viewBox="0 0 24 24" style="margin-right: 8px;"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="6"></circle><circle cx="12" cy="12" r="2"></circle></svg><span id="etfMonitorToggleText">MONITOR ETF</span><div class="toggle-icon" id="etfToggleIcon">▼</div></div>
+                        <div id="desktop-etf-list"></div>
                     </div>
                 </div>
-            </div>
+            </div> 
         </div>
         <div id="section-etf" class="app-section"><div class="etf-search-box"><span class="etf-search-icon"><svg width="16" height="16" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></span><input type="text" class="etf-search-input" id="etfSearchInput" placeholder="BUSCAR TOKEN (Ej: BTC, SUI)" oninput="filterETFs(this.value)" onfocus="this.select()"></div><div id="etfGrid" class="levels-container"></div></div>
         <div id="section-log" class="app-section">
@@ -1898,114 +1680,6 @@
             strategyToggleLongPress = false;
         }
 
-        
-        // === SISTEMA DE PANELES DESLIZABLES ===
-        let currentPanelIndex = 0;
-        let panelTouchStartX = 0;
-        let panelTouchStartY = 0;
-        let isPanelSwiping = false;
-        
-        function initPanels() {
-            const panelsContainer = document.getElementById('panelsContainer');
-            if (!panelsContainer) return;
-            
-            panelsContainer.addEventListener('touchstart', handlePanelTouchStart, { passive: true });
-            panelsContainer.addEventListener('touchmove', handlePanelTouchMove, { passive: false });
-            panelsContainer.addEventListener('touchend', handlePanelTouchEnd, { passive: true });
-        }
-        
-        function handlePanelTouchStart(e) {
-            panelTouchStartX = e.touches[0].clientX;
-            panelTouchStartY = e.touches[0].clientY;
-            isPanelSwiping = false;
-        }
-        
-        function handlePanelTouchMove(e) {
-            if (!panelTouchStartX || !panelTouchStartY) return;
-            
-            const touchX = e.touches[0].clientX;
-            const touchY = e.touches[0].clientY;
-            const diffX = panelTouchStartX - touchX;
-            const diffY = panelTouchStartY - touchY;
-            
-            // Solo consideramos swipe horizontal si el movimiento X es mayor que Y
-            if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 10) {
-                isPanelSwiping = true;
-                e.preventDefault(); // Prevenir scroll vertical
-            }
-        }
-        
-        function handlePanelTouchEnd(e) {
-            if (!isPanelSwiping) {
-                panelTouchStartX = 0;
-                panelTouchStartY = 0;
-                return;
-            }
-            
-            const touchEndX = e.changedTouches[0].clientX;
-            const diffX = panelTouchStartX - touchEndX;
-            const threshold = 50; // Mínimo de píxeles para cambiar de panel
-            
-            if (Math.abs(diffX) > threshold) {
-                if (diffX > 0) {
-                    // Swipe izquierda - ir al siguiente panel
-                    goToPanel(currentPanelIndex + 1);
-                } else {
-                    // Swipe derecha - ir al panel anterior
-                    goToPanel(currentPanelIndex - 1);
-                }
-            }
-            
-            panelTouchStartX = 0;
-            panelTouchStartY = 0;
-            isPanelSwiping = false;
-        }
-        
-        function goToPanel(index) {
-            const totalPanels = 3;
-            
-            // Limitar el índice entre 0 y totalPanels-1
-            if (index < 0) index = 0;
-            if (index >= totalPanels) index = totalPanels - 1;
-            
-            currentPanelIndex = index;
-            
-            // Mover el contenedor de paneles
-            const panelsContainer = document.getElementById('panelsContainer');
-            const offset = -(index * 33.333); // 33.333% por panel
-            panelsContainer.style.transform = `translateX(${offset}%)`;
-            
-            // Actualizar indicador
-            updatePanelIndicator();
-            
-            // Mostrar/ocultar timeframes: solo visible en Panel 1
-            const tfBar = document.getElementById('tfBarContainer');
-            const spacer = document.querySelector('.content-spacer');
-            if (tfBar && spacer) {
-                if (index === 0) {
-                    tfBar.style.display = 'grid';
-                    spacer.style.marginTop = '92px';
-                } else {
-                    tfBar.style.display = 'none';
-                    spacer.style.marginTop = '60px';
-                }
-            }
-            
-            // Vibración suave
-            if (navigator.vibrate) navigator.vibrate(30);
-        }
-        
-        function updatePanelIndicator() {
-            const dots = document.querySelectorAll('.panel-dot');
-            dots.forEach((dot, i) => {
-                if (i === currentPanelIndex) {
-                    dot.classList.add('active');
-                } else {
-                    dot.classList.remove('active');
-                }
-            });
-        }
-        
         function init() { 
              try {
                 if(!tickerAssets || tickerAssets.length === 0) { tickerAssets = ["BTC", "ETH", "SUI", "AVAX", "SOL", "BNB"]; localStorage.setItem('c5x_ticker_assets', JSON.stringify(tickerAssets)); }
@@ -2015,7 +1689,7 @@
                 loadInvestmentValue(); loadSlotsLevels(); updateThemeIcon(); loadActiveOrders(); loadSellOrder(); loadSellTarget(); updateStrategyButtonVisuals(); updateTradingModeUI(); loadETFMonitorState();
                 if (apiConfig.key && apiConfig.secret) fetchWalletBalance();
                 if(!slots[activeIdx]) activeIdx = 0;
-                updateDashUI(); renderNav(); selectSlot(activeIdx); renderHistory(); updatePinUI(); startTickerSystem(); fetchAndCalcTopDroppers(); setupSwipe(); initPanels();
+                updateDashUI(); renderNav(); selectSlot(activeIdx); renderHistory(); updatePinUI(); startTickerSystem(); fetchAndCalcTopDroppers(); setupSwipe();
                 document.querySelectorAll('.tf-btn').forEach(btn => { if(btn.dataset.tf === activeTF) btn.classList.add('active'); });
                 calculateGlobalStats(); updateStats('D'); updateDashboardStats(); startGateMonitoring();
                 window.addEventListener('scroll', handleWindowScroll);
@@ -2228,7 +1902,7 @@
         function saveActiveOrders() { const storageKey = 'c5x_active_orders_real'; localStorage.setItem(storageKey, JSON.stringify(activeOrders)); }
         function updateLevelsUI() { const levelCards = document.querySelectorAll('[data-level-index]'); levelCards.forEach((card, index) => { card.classList.remove('order-selected', 'order-pending', 'order-filled', 'order-error', 'is-filled', 'is-pending', 'bought'); const badge = card.querySelector('.order-status-badge'); if (badge) badge.remove(); const key = getOrderKey(activeIdx, index); const s = slots[activeIdx]; const isBought = s.buys && s.buys.includes(index); if (activeOrders[key]) { const order = activeOrders[key]; if (order.status === 'open') { updateLevelStatus(index, 'pending', 'PENDIENTE'); card.classList.add('is-pending'); } else if (order.status === 'filled') { updateLevelStatus(index, 'filled', 'EJECUTADA ✓'); card.classList.add('is-filled'); } } else if (isBought) { card.classList.add('is-filled'); } }); }
         function loadSellOrder() { const saved = localStorage.getItem('c5x_sell_order'); if (saved) { try { const sellOrder = JSON.parse(saved); const sellIcon = document.getElementById('sellIcon'); const targetSection = document.getElementById('targetSection'); if (sellOrder.status === 'open') { if(sellIcon) sellIcon.textContent = '⏳'; targetSection.style.borderColor = 'var(--long)'; targetSection.style.background = 'linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(14, 203, 129, 0.1))'; showToast("📊 Orden de venta activa"); monitorSellOrder(sellOrder.orderId, sellOrder.symbol); } } catch (e) { console.error("Error cargando orden de venta:", e); } } }
-        function renderNav() { document.getElementById('slotNav').innerHTML = slots.map((s, i) => { let statusClass = ''; if(s.name) statusClass = 'is-occupied'; return `<div class="slot-card ${i === activeIdx ? 'active' : ''} ${statusClass}" id="nav-s${i}" onclick="selectSlot(${i})">${s.name || 'S'+(i+1)}</div>`; }).join(''); updateGeneralDashboard(); }
+        function renderNav() { document.getElementById('slotNav').innerHTML = slots.map((s, i) => { let statusClass = ''; if(s.name) statusClass = 'is-occupied'; return `<div class="slot-card ${i === activeIdx ? 'active' : ''} ${statusClass}" id="nav-s${i}" onclick="selectSlot(${i})">${s.name || 'S'+(i+1)}</div>`; }).join(''); }
         function selectSlot(i) { 
             triggerHaptic(); 
             activeIdx = i; 
@@ -2305,7 +1979,7 @@
         function viewTickerChart(e) { if(e) e.stopPropagation(); chartSymbol = currentTickerSymbol.toUpperCase(); loadChart(chartSymbol); if(currentSection !== 'operate') switchView('operate', false); }
         function updateTF(tf, btn) { triggerHaptic(); activeTF = tf; localStorage.setItem('c5x_last_tf', tf); document.querySelectorAll('.tf-btn').forEach(b => b.classList.remove('active')); btn.classList.add('active'); loadChart(chartSymbol); }
         let tvWidget = null;
-        function loadChart(coin) { chartSymbol = (coin || 'BTC3L').toUpperCase(); if(tvWidget) { try{ tvWidget.remove(); }catch(e){} } if(typeof TradingView !== 'undefined') { tvWidget = new TradingView.widget({ "autosize": true, "symbol": `GATEIO:${chartSymbol.replace('USDT','') }USDT`, "interval": activeTF, "theme": isLight ? "light" : "dark", "container_id": "tv_chart", "hide_top_toolbar": true, "backgroundColor": isLight ? "#f0f2f5" : "#0b141a", "locale": "es", "disabled_features": ["use_localstorage_for_settings"], "enabled_features": ["study_templates"] }); } setTimeout(() => { addTradingLevelsToChart(); }, 500); }
+        function loadChart(coin) { chartSymbol = (coin || 'BTC3L').toUpperCase(); if(tvWidget) { try{ tvWidget.remove(); }catch(e){} } if(typeof TradingView !== 'undefined') { tvWidget = new TradingView.widget({ "autosize": true, "symbol": `GATEIO:${chartSymbol.replace('USDT','') }USDT`, "interval": activeTF, "theme": isLight ? "light" : "dark", "container_id": "tv_chart", "hide_top_toolbar": true, "backgroundColor": isLight ? "#F2F0E9" : "#0b0e11", "locale": "es", "disabled_features": ["use_localstorage_for_settings"], "enabled_features": ["study_templates"] }); } setTimeout(() => { addTradingLevelsToChart(); }, 500); }
         function addTradingLevelsToChart() { const overlay = document.getElementById('priceLinesOverlay'); if (!overlay) return; overlay.innerHTML = ''; const s = slots[activeIdx]; const avg = calculateAvgPriceForSlot(s); if (avg <= 0 || !s.buys || s.buys.length === 0 || !s.price) { return; } const params = getStrategyParams(s.strat); const roiTarget = s.strat === 'dorada' ? params.roi : params.roi; const targetPrice = avg * (1 + (roiTarget / 100)); let lowestPrice = s.price; const maxLevel = Math.max(...s.buys); let currentP = s.price; for(let i = 1; i <= maxLevel; i++) { const step = getStepForLevel(s.strat, i); currentP = currentP * (1 - (step / 100)); } lowestPrice = currentP; const priceRange = targetPrice - lowestPrice; const minPrice = lowestPrice - (priceRange * 0.1); const maxPrice = targetPrice + (priceRange * 0.1); const totalRange = maxPrice - minPrice; function getPricePosition(price) { const percentage = ((price - minPrice) / totalRange) * 100; return 100 - percentage; } const avgPos = getPricePosition(avg); const avgLine = document.createElement('div'); avgLine.className = 'price-line avg-line'; avgLine.style.top = avgPos + '%'; avgLine.innerHTML = `<div class="price-label avg">🟢 PROM: $${avg.toFixed(avg < 1 ? 6 : 4)}</div>`; overlay.appendChild(avgLine); const targetPos = getPricePosition(targetPrice); const targetLine = document.createElement('div'); targetLine.className = 'price-line target-line'; targetLine.style.top = targetPos + '%'; targetLine.innerHTML = `<div class="price-label target">🎯 +${roiTarget}%: $${targetPrice.toFixed(targetPrice < 1 ? 6 : 4)}</div>`; overlay.appendChild(targetLine); let lastPrice = s.price; s.buys.forEach((levelIdx) => { let tempP = s.price; for(let i = 1; i <= levelIdx; i++) { const step = getStepForLevel(s.strat, i); tempP = tempP * (1 - (step / 100)); } const buyPos = getPricePosition(tempP); const buyLine = document.createElement('div'); buyLine.className = 'price-line buy-line'; buyLine.style.top = buyPos + '%'; buyLine.innerHTML = `<div class="price-label buy">🔹 N${levelIdx + 1}</div>`; overlay.appendChild(buyLine); }); }
         function renderLevels() { const grid = document.getElementById('levelsGrid'); const s = slots[activeIdx]; if (!s.name) { grid.innerHTML = '<div style="text-align:center; padding:20px; color:var(--text-tertiary)">SELECCIONA UNA MONEDA</div>'; return; } if (s.price <= 0) { grid.innerHTML = '<div style="text-align:center; padding:20px; color:var(--text-tertiary)">DEFINE PRECIO BASE</div>'; return; } const limit = customMultipliers ? customMultipliers.length : 12; let html = ''; let currentPrice = s.price; let totalInvested = 0; let totalQty = 0; const params = getStrategyParams(s.strat); for (let i = 0; i < limit; i++) { let levelPrice, step; if (i === 0) { levelPrice = s.price; step = 0; } else { step = getStepForLevel(s.strat, i); levelPrice = currentPrice * (1 - (step / 100)); } currentPrice = levelPrice; let multiplier = customMultipliers ? (customMultipliers[i] || 1) : 1; let levelCapital; if (s.strat === 'dorada') { if (i <= 1) levelCapital = 10; else if (i <= 3) levelCapital = 15; else if (i <= 5) levelCapital = 20; else if (i <= 7) levelCapital = 25; else if (i <= 9) levelCapital = 30; else levelCapital = 35; } else { levelCapital = params.capital * multiplier; } let qty = levelCapital / levelPrice; const key = getOrderKey(activeIdx, i); let badgeHtml = ''; let cardStateClass = ''; const isBoughtLegacy = s.buys.includes(i); const canBuyMultiple = (i >= 6 && i <= 11); // NIVELES 7-12
             let buyCount = 0; let accumulatedUSDT = 0; let accumulatedQty = 0; if (canBuyMultiple && s.multipleBuys && s.multipleBuys[i]) { buyCount = s.multipleBuys[i].length; for (let buy of s.multipleBuys[i]) { accumulatedUSDT += buy.usd; accumulatedQty += buy.qty; } } if(activeOrders[key]) { const status = activeOrders[key].status === 'open' ? 'PENDIENTE' : 'EJECUTADA ✓'; const cssClass = activeOrders[key].status === 'open' ? 'pending' : 'filled'; badgeHtml = `<div class="order-status-badge ${cssClass}">${status}</div>`; if(activeOrders[key].status === 'filled') { cardStateClass = 'is-filled'; totalInvested += levelCapital; totalQty += qty; } else { cardStateClass = 'is-pending'; } } else if (isBoughtLegacy || buyCount > 0) { cardStateClass = 'is-filled'; if (buyCount > 0) { totalInvested += accumulatedUSDT; totalQty += accumulatedQty; } else { totalInvested += levelCapital; totalQty += qty; } } const displayPrice = (levelPrice < 1) ? levelPrice.toFixed(6) : levelPrice.toFixed(4); let displayStep = step; const buyTimesLabel = ''; const multiBuyBadge = (canBuyMultiple && buyCount > 0) ? `<div class="multi-buy-indicator">${buyCount}</div>` : ''; const accumulatedLabel = (canBuyMultiple && accumulatedUSDT > 0) ? `<div class="u-val-accumulated">+$${accumulatedUSDT.toFixed(2)}</div>` : ''; html += `<div class="unified-card ${cardStateClass}" data-level-index="${i}" ontouchstart="startLevelPress(event, ${i})" ontouchend="endLevelPress(event)" onmousedown="startLevelPress(event, ${i})" onmouseup="endLevelPress(event)" onmouseleave="cancelLevelPress()"><div class="u-index">${i + 1}${canBuyMultiple ? '<br><small style="font-size:7px;">×4</small>' : ''}</div><div class="u-center"><div class="u-title" style="font-size:18px;">$${displayPrice}</div><div class="u-sub">CANT: ${(canBuyMultiple && buyCount > 0 ? accumulatedQty : qty).toFixed(4)}</div></div><div class="u-right">${multiBuyBadge}<div class="u-val-primary">$${(canBuyMultiple && accumulatedUSDT > 0 ? accumulatedUSDT : levelCapital).toFixed(2)}</div><div class="u-val-secondary" style="color:var(--short)">-${displayStep.toFixed(0)}%</div></div>${badgeHtml}</div>`; } grid.innerHTML = html; updateLevelsUI(); }
@@ -2389,29 +2063,45 @@
             calculate(); 
         }
 
+        /* --- CORRECCIONES JS PARA USER REQUEST --- */
+
         async function fetchWalletBalance() { 
             try { 
                 const usdtData = await callGateApi("GET", "/spot/accounts", {currency: "USDT"}, true); 
-                if (!usdtData) throw new Error("No se recibió respuesta de Gate.io"); 
                 let usdtAvailable = 0; 
-                let usdtRows = Array.isArray(usdtData) ? usdtData : (usdtData.result || []); 
-                if (usdtRows.length > 0) { usdtAvailable = parseFloat(usdtRows[0].available); }
+                
+                if (usdtData) {
+                    let usdtRows = Array.isArray(usdtData) ? usdtData : (usdtData.result || []); 
+                    if (usdtRows.length > 0) { usdtAvailable = parseFloat(usdtRows[0].available); }
+                }
+                
                 globalCapital = usdtAvailable; 
                 localStorage.setItem('c5x_global_capital', globalCapital); 
+                
+                // Actualizar UI del Dashboard original
                 const formatted = "$" + usdtAvailable.toFixed(2); 
                 document.getElementById('dashWallet').textContent = formatted; 
+                
+                // --- CORRECCIÓN: ACTUALIZAR EL TICKER SUPERIOR CON EL SALDO ---
+                document.getElementById('t-sym').textContent = "USDT DISPONIBLE";
+                document.getElementById('t-price').textContent = formatted;
+                document.getElementById('t-dot').style.background = 'var(--long)';
+                document.getElementById('t-dot').classList.remove('pulse'); // Quitar animación de pulso
+                
+                // Actualizar input de configuración
                 const elCap = document.getElementById('setGlobalCapital'); 
                 if(elCap) elCap.value = usdtAvailable.toFixed(2);
-                const totalBalanceEl = document.getElementById('totalBalanceDisplay');
-                if (totalBalanceEl) totalBalanceEl.textContent = "$" + usdtAvailable.toFixed(2);
-                autoImportGatePositions(); 
+                
             } catch (e) { 
+                // Fallback si falla la API
                 const savedCapital = globalCapital || 0; 
-                document.getElementById('dashWallet').textContent = "$" + savedCapital.toFixed(2);
-                const totalBalanceEl = document.getElementById('totalBalanceDisplay');
-                if (totalBalanceEl) totalBalanceEl.textContent = "$" + savedCapital.toFixed(2);
+                const formatted = "$" + savedCapital.toFixed(2);
+                document.getElementById('dashWallet').textContent = formatted;
+                document.getElementById('t-sym').textContent = "USDT (OFFLINE)";
+                document.getElementById('t-price').textContent = formatted;
             } 
         }
+
         async function autoImportGatePositions() { try { const balances = await callGateApi("GET", "/spot/accounts"); if(!balances || !Array.isArray(balances)) return; const activeBalances = balances.filter(b => b.currency !== 'USDT' && parseFloat(b.available) > 0.001); let imported = 0; activeBalances.forEach(bal => { const coinName = bal.currency; const exists = slots.some(s => s.name === coinName); if (!exists) { const emptyIdx = slots.findIndex(s => !s.name || s.name === ''); if (emptyIdx !== -1) { slots[emptyIdx].name = coinName; slots[emptyIdx].price = 0; slots[emptyIdx].capital = 5; slots[emptyIdx].strat = 'normal'; slots[emptyIdx].locked = true; imported++; } } }); if (imported > 0) { save(); renderNav(); if (activeIdx === 0) selectSlot(activeIdx); showToast(`✅ ${imported} pos. importada(s)`); } } catch(e) { console.warn("Auto-Import Error", e); } }
         function setLightMode(isLightMode) { triggerHaptic(); isLight = isLightMode; if(isLight) { document.body.classList.add('light-mode'); } else { document.body.classList.remove('light-mode'); } updateThemeIcon(); localStorage.setItem('theme', isLight ? 'light' : 'dark'); if(chartSymbol) loadChart(chartSymbol); }
         let secCallback = null;
@@ -2427,82 +2117,17 @@
         function openMenuViaButton() { document.getElementById('navModal').style.display = 'flex'; window.history.pushState({modal: 'menu'}, '', '#menu'); }
         function closeMenuViaButton() { window.history.back(); }
         function switchView(viewName) { triggerHaptic(); document.getElementById('navModal').style.display = 'none'; if (viewName !== 'operate') { window.history.pushState({page: viewName}, '', `#${viewName}`); } updateViewVisuals(viewName); }
-        function updateViewVisuals(viewName) { currentSection = viewName; document.querySelectorAll('.app-section').forEach(el => el.classList.remove('active')); const section = document.getElementById('section-' + viewName); if(section) section.classList.add('active'); document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('selected')); const navItem = document.getElementById('nav-' + viewName); if(navItem) navItem.classList.add('selected'); const tfBar = document.getElementById('tfBarContainer'), spacer = document.querySelector('.content-spacer'); if(viewName === 'operate') { if(chartSymbol) loadChart(chartSymbol); document.getElementById('fabEtf').classList.add('show'); document.getElementById('panelsIndicator').style.display = 'flex'; goToPanel(0); } else { tfBar.style.display = 'none'; spacer.style.marginTop = '60px'; document.getElementById('fabEtf').classList.remove('show'); document.getElementById('panelsIndicator').style.display = 'none'; } if(viewName === 'etf') loadGateETFs(); if(viewName === 'settings') { loadSettingsValues(); renderTickerSettings(); } if(viewName === 'log') updateStats('D'); window.scrollTo(0,0); }
+        function updateViewVisuals(viewName) { currentSection = viewName; document.querySelectorAll('.app-section').forEach(el => el.classList.remove('active')); const section = document.getElementById('section-' + viewName); if(section) section.classList.add('active'); document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('selected')); const navItem = document.getElementById('nav-' + viewName); if(navItem) navItem.classList.add('selected'); const tfBar = document.getElementById('tfBarContainer'), spacer = document.querySelector('.content-spacer'); if(viewName === 'operate') { tfBar.style.display = 'grid'; spacer.style.marginTop = '92px'; if(chartSymbol) loadChart(chartSymbol); } else { tfBar.style.display = 'none'; spacer.style.marginTop = '60px'; } if(viewName === 'etf') loadGateETFs(); if(viewName === 'settings') { loadSettingsValues(); renderTickerSettings(); } if(viewName === 'log') updateStats('D'); window.scrollTo(0,0); }
         window.onpopstate = function(event) { const state = event.state; document.getElementById('navModal').style.display = 'none'; if (!state) { updateViewVisuals('operate'); return; } if (state.modal === 'menu') { document.getElementById('navModal').style.display = 'flex'; } else if (state.page) { updateViewVisuals(state.page); } else { updateViewVisuals('operate'); } };
         function setupSwipe() { document.addEventListener('touchstart', e => { window.touchStartX = e.changedTouches[0].screenX; window.touchStartY = e.changedTouches[0].screenY; }, {passive: true}); document.addEventListener('touchend', e => { let touchEndX = e.changedTouches[0].screenX; let touchEndY = e.changedTouches[0].screenY; handleSwipe(window.touchStartX, window.touchStartY, touchEndX, touchEndY); }, {passive: true}); }
-        function handleSwipe(tsX, tsY, teX, teY) { const threshold = 60; const diffX = teX - tsX; const diffY = teY - tsY; if (Math.abs(diffY) > Math.abs(diffX)) return; if (currentSection !== 'operate') { if (diffX > threshold) { window.history.back(); } } else { if (currentPanelIndex !== 0) return; const occupiedIndices = slots.map((s, i) => s.name ? i : -1).filter(i => i !== -1); if (occupiedIndices.length === 0) { if (diffX < -threshold) { let next = activeIdx + 1; if(next > 7) next = 0; selectSlot(next); } else if (diffX > threshold) { let prev = activeIdx - 1; if(prev < 0) prev = 7; selectSlot(prev); } return; } let currentPos = occupiedIndices.indexOf(activeIdx); if (diffX < -threshold) { let nextIndex; if (currentPos === -1) { nextIndex = occupiedIndices[0]; } else { let nextPos = currentPos + 1; if (nextPos >= occupiedIndices.length) nextPos = 0; nextIndex = occupiedIndices[nextPos]; } selectSlot(nextIndex); } else if (diffX > threshold) { let prevIndex; if (currentPos === -1) { prevIndex = occupiedIndices[occupiedIndices.length - 1]; } else { let prevPos = currentPos - 1; if (prevPos < 0) prevPos = occupiedIndices.length - 1; prevIndex = occupiedIndices[prevPos]; } selectSlot(prevIndex); } } }
+        function handleSwipe(tsX, tsY, teX, teY) { const threshold = 60; const diffX = teX - tsX; const diffY = teY - tsY; if (Math.abs(diffY) > Math.abs(diffX)) return; if (currentSection !== 'operate') { if (diffX > threshold) { window.history.back(); } } else { const occupiedIndices = slots.map((s, i) => s.name ? i : -1).filter(i => i !== -1); if (occupiedIndices.length === 0) { if (diffX < -threshold) { let next = activeIdx + 1; if(next > 7) next = 0; selectSlot(next); } else if (diffX > threshold) { let prev = activeIdx - 1; if(prev < 0) prev = 7; selectSlot(prev); } return; } let currentPos = occupiedIndices.indexOf(activeIdx); if (diffX < -threshold) { let nextIndex; if (currentPos === -1) { nextIndex = occupiedIndices[0]; } else { let nextPos = currentPos + 1; if (nextPos >= occupiedIndices.length) nextPos = 0; nextIndex = occupiedIndices[nextPos]; } selectSlot(nextIndex); } else if (diffX > threshold) { let prevIndex; if (currentPos === -1) { prevIndex = occupiedIndices[occupiedIndices.length - 1]; } else { let prevPos = currentPos - 1; if (prevPos < 0) prevPos = occupiedIndices.length - 1; prevIndex = occupiedIndices[prevPos]; } selectSlot(prevIndex); } } }
         async function requestWakeLock() { try { if ('wakeLock' in navigator) await navigator.wakeLock.request('screen'); } catch (err) {} }
         function unlockAudioAndWake() { const audio = document.getElementById('alertSound'); if(audio) { audio.play().then(() => { audio.pause(); audio.currentTime = 0; }).catch(e=>{}); } if("Notification" in window && Notification.permission !== "granted") { Notification.requestPermission(); } requestWakeLock(); }
         function showToast(txt, duration = 2500, isAlert = false, isSuccess = false) { const t = document.getElementById("toast"); t.textContent = txt; t.className = ""; if(isAlert) t.classList.add("alert-mode"); if(isSuccess) t.classList.add("success-mode"); t.classList.add("show"); setTimeout(() => { t.classList.remove("show"); }, duration); }
         
         function sortSlots() { const filled = slots.filter(s => s.name && s.name !== ''); const empty = slots.filter(s => !s.name || s.name === ''); slots = [...filled, ...empty]; save(); renderNav(); }
         
-        function calculateGlobalStats() { let totalRealizedProfit = history.reduce((sum, item) => { return sum + (item.netProfit !== undefined ? parseFloat(item.netProfit) : (parseFloat(item.profit) || 0)); }, 0); let currentEquity = globalCapital + totalRealizedProfit; updateGeneralDashboard(); }
-        
-        function updateGeneralDashboard() {
-            // Capital Total
-            const capitalEl = document.getElementById('generalCapital');
-            if (capitalEl) capitalEl.textContent = `$${globalCapital.toFixed(2)}`;
-            
-            // PNL Total
-            let totalProfit = 0;
-            let wins = 0;
-            history.forEach(h => {
-                const profit = h.netProfit !== undefined ? parseFloat(h.netProfit) : (parseFloat(h.profit) || 0);
-                totalProfit += profit;
-                if (profit > 0) wins++;
-            });
-            
-            const pnlEl = document.getElementById('generalPnl');
-            if (pnlEl) {
-                pnlEl.textContent = `${totalProfit >= 0 ? '+' : ''}$${totalProfit.toFixed(2)}`;
-                pnlEl.className = `general-stat-value ${totalProfit >= 0 ? 'positive' : 'negative'}`;
-            }
-            
-            // Win Rate
-            const winRate = history.length > 0 ? ((wins / history.length) * 100).toFixed(1) : 0;
-            const wrEl = document.getElementById('generalWinRate');
-            if (wrEl) wrEl.textContent = `${winRate}%`;
-            
-            // Operaciones Totales
-            const opsEl = document.getElementById('generalOps');
-            if (opsEl) opsEl.textContent = history.length;
-            
-            // Ganancia del Mes
-            const now = new Date();
-            const currentMonth = now.getMonth();
-            const currentYear = now.getFullYear();
-            let monthlyProfit = 0;
-            
-            history.forEach(h => {
-                const parts = h.date.split('/');
-                if (parts.length === 3) {
-                    const hDate = new Date(parts[2], parts[1] - 1, parts[0]);
-                    if (hDate.getMonth() === currentMonth && hDate.getFullYear() === currentYear) {
-                        monthlyProfit += parseFloat(h.netProfit !== undefined ? h.netProfit : h.profit || 0);
-                    }
-                }
-            });
-            
-            const monthProfitEl = document.getElementById('generalMonthProfit');
-            if (monthProfitEl) monthProfitEl.textContent = `${monthlyProfit >= 0 ? '+' : ''}$${monthlyProfit.toFixed(2)}`;
-            
-            // Mejor Operación
-            let bestTrade = 0;
-            history.forEach(h => {
-                const profit = h.netProfit !== undefined ? parseFloat(h.netProfit) : (parseFloat(h.profit) || 0);
-                if (profit > bestTrade) bestTrade = profit;
-            });
-            
-            const bestTradeEl = document.getElementById('generalBestTrade');
-            if (bestTradeEl) bestTradeEl.textContent = `$${bestTrade.toFixed(2)}`;
-            
-            // Operaciones Activas
-            const activeSlots = slots.filter(s => s.name && s.name !== '').length;
-            const activeSlotsEl = document.getElementById('generalActiveSlots');
-            if (activeSlotsEl) activeSlotsEl.textContent = activeSlots;
-        }
-        
+        function calculateGlobalStats() { let totalRealizedProfit = history.reduce((sum, item) => { return sum + (item.netProfit !== undefined ? parseFloat(item.netProfit) : (parseFloat(item.profit) || 0)); }, 0); let currentEquity = globalCapital + totalRealizedProfit; }
         
         function cleanSlotOnly() { 
             triggerHaptic(); 
@@ -2539,197 +2164,30 @@
                 
                 elStatus.className = 'radar-status-dot online'; 
                 
-                // Obtener info de BTC y ETH para correlación
+                // Info BTC/ETH para correlación
                 const btcTicker = tickers.find(t => t.currency_pair === 'BTC_USDT');
-                const ethTicker = tickers.find(t => t.currency_pair === 'ETH_USDT');
                 const btcChange = btcTicker ? parseFloat(btcTicker.change_percentage) : 0;
-                const ethChange = ethTicker ? parseFloat(ethTicker.change_percentage) : 0;
-                const btcVolume = btcTicker ? parseFloat(btcTicker.quote_volume) : 0;
-                
-                console.log(`📊 BTC: ${btcChange.toFixed(2)}% | ETH: ${ethChange.toFixed(2)}% | BTC Vol: $${(btcVolume/1e9).toFixed(2)}B`);
                 
                 allGateETFs = tickers.filter(t => { 
                     const pair = t.currency_pair; 
                     return pair.endsWith('_USDT') && (pair.includes('3L') || pair.includes('3S') || pair.includes('5L') || pair.includes('5S')); 
                 }).map(t => { 
                     const change = parseFloat(t.change_percentage); 
-                    const volume = parseFloat(t.quote_volume); 
-                    const price = parseFloat(t.last);
-                    const high24h = parseFloat(t.high_24h);
-                    const low24h = parseFloat(t.low_24h);
-                    const leverage = t.currency_pair.match(/5[LS]/) ? 5 : 3; 
-                    const isShort = t.currency_pair.includes('S');
-                    const isLong = t.currency_pair.includes('L');
-                    const baseCoin = t.currency_pair.replace('_USDT', '').replace(/[35][LS]/, '');
                     
-                    // Determinar el cambio del activo principal
-                    let mainCoinChange = 0;
-                    if (baseCoin === 'BTC') mainCoinChange = btcChange;
-                    else if (baseCoin === 'ETH') mainCoinChange = ethChange;
-                    else mainCoinChange = btcChange * 0.8; // Aproximación para otros
+                    let score = 0;
+                    if(change < -50) score = Math.abs(change); 
                     
-                    let score = 0; 
-                    let zone = 'WARM';
-                    let isGoldenOpportunity = false;
-                    
-                    // ===========================================
-                    // SISTEMA AVANZADO DE DETECCIÓN DE OPORTUNIDADES
-                    // ===========================================
-                    
-                    // 1. ANÁLISIS DE CORRELACIÓN CON ACTIVO PRINCIPAL
-                    let correlationScore = 0;
-                    if (isShort && mainCoinChange > 30) correlationScore = 40;
-                    else if (isShort && mainCoinChange > 25) correlationScore = 35;
-                    else if (isShort && mainCoinChange > 20) correlationScore = 25;
-                    else if (isLong && mainCoinChange < -30) correlationScore = 40;
-                    else if (isLong && mainCoinChange < -25) correlationScore = 35;
-                    else if (isLong && mainCoinChange < -20) correlationScore = 25;
-                    else if (isShort && mainCoinChange > 0) correlationScore = 5;
-                    else if (isLong && mainCoinChange < 0) correlationScore = 5;
-                    
-                    // 2. ANÁLISIS DE CAÍDA (Factor más importante)
-                    let dropScore = 0;
-                    if (change < -85) dropScore = 50;
-                    else if (change < -80) dropScore = 45;
-                    else if (change < -75) dropScore = 40;
-                    else if (change < -70) dropScore = 35;
-                    else if (change < -65) dropScore = 30;
-                    else if (change < -60) dropScore = 25;
-                    else if (change < -55) dropScore = 20;
-                    else if (change < -50) dropScore = 15;
-                    else dropScore = 10;
-                    
-                    // 3. ANÁLISIS DE VOLUMEN (Liquidez)
-                    let volumeScore = 0;
-                    if (volume > 20000000) volumeScore = 20;
-                    else if (volume > 15000000) volumeScore = 18;
-                    else if (volume > 10000000) volumeScore = 15;
-                    else if (volume > 7000000) volumeScore = 12;
-                    else if (volume > 5000000) volumeScore = 10;
-                    else if (volume > 3000000) volumeScore = 8;
-                    else if (volume > 1000000) volumeScore = 5;
-                    else volumeScore = 2;
-                    
-                    // 4. ANÁLISIS DE VOLATILIDAD (24h range)
-                    const volatilityRange = high24h > 0 ? ((high24h - low24h) / low24h) * 100 : 0;
-                    let volatilityScore = 0;
-                    if (volatilityRange > 100) volatilityScore = 15; // Altísima volatilidad
-                    else if (volatilityRange > 80) volatilityScore = 12;
-                    else if (volatilityRange > 60) volatilityScore = 10;
-                    else if (volatilityRange > 40) volatilityScore = 8;
-                    else if (volatilityRange > 20) volatilityScore = 5;
-                    else volatilityScore = 2;
-                    
-                    // 5. BONUS POR APALANCAMIENTO
-                    const leverageScore = leverage === 5 ? 10 : 5;
-                    
-                    // 6. ANÁLISIS DE MOMENTUM (RSI simulado basado en posición en el rango)
-                    let rsiSimulated = 50;
-                    if (high24h > low24h && high24h > 0) {
-                        rsiSimulated = ((price - low24h) / (high24h - low24h)) * 100;
-                    }
-                    let momentumScore = 0;
-                    if (rsiSimulated < 10) momentumScore = 10; // Extrema sobreventa
-                    else if (rsiSimulated < 20) momentumScore = 8;
-                    else if (rsiSimulated < 30) momentumScore = 5;
-                    else if (rsiSimulated < 40) momentumScore = 3;
-                    
-                    // 7. BONUS POR CONTEXTO DE MERCADO
-                    let marketContextScore = 0;
-                    const btcIsExtreme = Math.abs(btcChange) > 15;
-                    if (btcIsExtreme && btcVolume > 5e9) marketContextScore = 5; // Mercado muy activo
-                    
-                    // ===========================================
-                    // CÁLCULO DE SCORE TOTAL
-                    // ===========================================
-                    score = dropScore + volumeScore + correlationScore + volatilityScore + 
-                            leverageScore + momentumScore + marketContextScore;
-                    
-                    // ===========================================
-                    // DETECCIÓN DE OPORTUNIDADES DORADAS
-                    // ===========================================
-                    if (change < -75 && correlationScore >= 35) {
-                        isGoldenOpportunity = true;
-                        score = 100;
-                        console.log(`🔥 DORADA: ${t.currency_pair} | Caída: ${change.toFixed(1)}% | ${baseCoin}: ${mainCoinChange > 0 ? '+' : ''}${mainCoinChange.toFixed(1)}% | Vol: $${(volume/1e6).toFixed(1)}M`);
-                    }
-                    // Oportunidades doradas alternativas (criterios más flexibles)
-                    else if (change < -70 && correlationScore >= 40) {
-                        isGoldenOpportunity = true;
-                        score = 100;
-                        console.log(`🔥 DORADA (alt): ${t.currency_pair} | Caída: ${change.toFixed(1)}% | Correlación perfecta`);
-                    }
-                    
-                    // ===========================================
-                    // CLASIFICACIÓN POR ZONAS
-                    // ===========================================
-                    if (isGoldenOpportunity) {
-                        zone = 'GOLD';
-                    } else if (score >= 80) {
-                        zone = 'HOT';
-                    } else if (score >= 60) {
-                        zone = 'WARM';
-                    } else {
-                        zone = 'COOL'; // Nueva zona para oportunidades menores
-                    }
-                    
-                    return { 
-                        ...t, 
-                        score: Math.min(score, 100), 
-                        zone: zone,
-                        isGolden: isGoldenOpportunity,
-                        btcCorrelation: isShort ? mainCoinChange : -mainCoinChange,
-                        mainCoin: baseCoin,
-                        mainCoinChange: mainCoinChange,
-                        volatilityRange: volatilityRange,
-                        rsiSimulated: rsiSimulated,
-                        // Factores de análisis para debugging
-                        factors: {
-                            drop: dropScore,
-                            volume: volumeScore,
-                            correlation: correlationScore,
-                            volatility: volatilityScore,
-                            leverage: leverageScore,
-                            momentum: momentumScore,
-                            context: marketContextScore
-                        }
-                    }; 
+                    return { ...t, score: score, zone: score > 80 ? 'HOT' : 'WARM' }; 
                 }); 
                 
-                // FILTRAR SOLO CAÍDAS >50%
-                const allCaiders = allGateETFs.filter(t => { 
-                    const change = parseFloat(t.change_percentage); 
-                    return change < -50; 
-                }); 
+                // FILTRAR CAÍDAS > 50%
+                const allCaiders = allGateETFs.filter(t => parseFloat(t.change_percentage) < -50); 
                 
-                // ORDENAR: 1) Doradas primero, 2) Menos caída (más cerca de 0%), 3) Score
-                allCaiders.sort((a, b) => {
-                    if (a.isGolden && !b.isGolden) return -1;
-                    if (!a.isGolden && b.isGolden) return 1;
-                    const changeA = parseFloat(a.change_percentage);
-                    const changeB = parseFloat(b.change_percentage);
-                    if (changeA !== changeB) return changeB - changeA;
-                    return b.score - a.score;
-                });
+                // ORDENAR
+                allCaiders.sort((a, b) => parseFloat(b.change_percentage) - parseFloat(a.change_percentage)); 
                 
-                // LIMITAR A 10 MÁXIMO
-                topDroppers = allCaiders.slice(0, Math.min(radarLimit, 10)); 
-                
-                // LOGGING DETALLADO
-                console.log(`━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`);
-                console.log(`📊 RADAR ACTUALIZADO - ${new Date().toLocaleTimeString()}`);
-                console.log(`━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`);
-                console.log(`Total oportunidades: ${topDroppers.length}`);
-                console.log(`🔥 DORADAS: ${topDroppers.filter(t => t.isGolden).length}`);
-                console.log(`🟡 HOT: ${topDroppers.filter(t => t.zone === 'HOT' && !t.isGolden).length}`);
-                console.log(`⚪ WARM: ${topDroppers.filter(t => t.zone === 'WARM').length}`);
-                
-                // Mostrar top 3 con detalles
-                topDroppers.slice(0, 3).forEach((t, i) => {
-                    const emoji = t.zone === 'GOLD' ? '🔥' : t.zone === 'HOT' ? '🟡' : '⚪';
-                    console.log(`${emoji} #${i+1}: ${t.currency_pair} | Score: ${t.score} | ${parseFloat(t.change_percentage).toFixed(1)}% | $${(parseFloat(t.quote_volume)/1e6).toFixed(1)}M`);
-                });
-                console.log(`━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`);
+                // --- CORRECCIÓN 1: SOLO LAS ÚLTIMAS 6 MEJORES OPORTUNIDADES ---
+                topDroppers = allCaiders.slice(0, 6); 
                 
                 radarQueue = [...topDroppers]; 
                 dropperIdx = 0; 
@@ -2739,9 +2197,9 @@
             } catch(e) { 
                 console.error("❌ Radar Error:", e); 
                 elStatus.className = 'radar-status-dot offline'; 
-                elVal.innerHTML = '<div style="font-size:10px; color:var(--danger); cursor:pointer; padding:5px;" onclick="fetchAndCalcTopDroppers()">⚠️ SIN CONEXIÓN - TOCAR</div>'; 
             } 
         }
+
         let currentRadarObj = null; let radarPressTimer = null; let radarLongPressTriggered = false; let radarTouchStartX = 0; let radarTouchStartY = 0; let isRadarSwipe = false;
         function quickInstallCurrentRadar() { 
             triggerHaptic(); 
@@ -2751,6 +2209,7 @@
             const isGolden = currentItem && (currentItem.zone === 'GOLD' || currentItem.isGolden);
             smartSelectETF(currentRadarObj.pair, currentRadarObj.price, isGolden); 
         }
+        
         function startRadarRotation() { 
             if(radarIntervalId) clearInterval(radarIntervalId); 
             updateRadarUI();
@@ -2761,17 +2220,14 @@
             const list = (radarQueue.length > 0) ? radarQueue : topDroppers;
             if(list.length === 0) return;
             
-            const currentItem = list[dropperIdx];
-            const isGolden = currentItem && (currentItem.zone === 'GOLD' || currentItem.isGolden);
-            const rotationTime = isGolden ? (radarSpeed * 2000) : (radarSpeed * 1000);
-            
+            // --- CORRECCIÓN 2: ROTACIÓN FIJA DE 10 SEGUNDOS ---
             radarIntervalId = setTimeout(() => {
                 dropperIdx = (dropperIdx + 1) % list.length;
                 updateRadarUI();
                 rotateRadarWithDynamicTiming();
-            }, rotationTime);
+            }, 10000); // 10000ms = 10 segundos exactos
         }
-        
+
         function updateRadarUI() { 
             const list = (radarQueue.length > 0) ? radarQueue : topDroppers; 
             if(list.length === 0) return; 
@@ -2781,79 +2237,32 @@
             const item = list[dropperIdx]; 
             if(!item) return; 
             
-            currentRadarObj = { 
-                pair: item.currency_pair.replace('_USDT', ''), 
-                price: parseFloat(item.last) 
-            }; 
+            currentRadarObj = { pair: item.currency_pair.replace('_USDT', ''), price: parseFloat(item.last) }; 
             
-            // Aplicar animación según la zona
-            radarContainer.classList.remove('gold-mode-active', 'flash-gold');
-            if (item.zone === 'GOLD' || item.isGolden) { 
-                radarContainer.classList.add('gold-mode-active'); 
-                radarContainer.classList.add('flash-gold'); 
-            } 
-            
-            // Fade out
+            // --- CORRECCIÓN 3: ACTUALIZAR EL CHART CUANDO ROTA EL RADAR ---
+            if(currentSection === 'operate') {
+                loadChart(currentRadarObj.pair);
+            }
+
+            // Animación y Renderizado
             elVal.style.opacity = 0; 
-            
             setTimeout(() => { 
                 const pairName = item.currency_pair.replace('_USDT', ''); 
                 const change = parseFloat(item.change_percentage).toFixed(2); 
                 const price = parseFloat(item.last); 
-                const displayPrice = price < 1 ? price.toFixed(4) : price.toFixed(2); 
-                const volume = (parseFloat(item.quote_volume) / 1000000).toFixed(1); 
-                
-                // Determinar emoji y texto según la zona
-                let zoneEmoji, zoneText, zoneClass;
-                if (item.zone === 'GOLD' || item.isGolden) {
-                    zoneEmoji = '🔥';
-                    zoneText = 'OPORTUNIDAD DORADA';
-                    zoneClass = 'gold';
-                } else if (item.zone === 'HOT') {
-                    zoneEmoji = '🟡';
-                    zoneText = 'ZONA CALIENTE';
-                    zoneClass = 'hot';
-                } else {
-                    zoneEmoji = '⚪';
-                    zoneText = 'ZONA TEMPLADA';
-                    zoneClass = 'warm';
-                }
-                
-                const nameColor = getCoinColor(pairName); 
-                
-                // Información adicional para oportunidades doradas
-                let detailedInfo = '';
-                if (item.isGolden && item.mainCoin) {
-                    const direction = item.mainCoinChange > 0 ? '↑' : '↓';
-                    detailedInfo = `<div style="font-size:13px; font-family:'JetBrains Mono', monospace; color:#FFD700; font-weight:700; margin-top:6px; display:flex; gap:12px; justify-content:center;">
-                        <span>✨ ${item.mainCoin} ${direction}${Math.abs(item.mainCoinChange).toFixed(1)}%</span>
-                        <span>Vol: $${volume}M</span>
-                    </div>`;
-                } else {
-                    // No mostrar información adicional para no-doradas (compactar dashboard)
-                    detailedInfo = '';
-                }
                 
                 elVal.innerHTML = `
-                    <div style="display:flex; flex-direction:column; gap:6px; align-items:center; position:relative; z-index:1;">
-                        <div class="radar-zone-badge ${zoneClass}" style="font-family:'JetBrains Mono', monospace; letter-spacing:1px;">
-                            ${zoneEmoji} ${zoneText} • ${item.score}
-                        </div>
-                        <div id="radarCoinName" style="color:${nameColor}; font-size:28px; line-height:1.1; font-weight:800; cursor:pointer; text-decoration:underline dotted; text-underline-offset:6px; margin: 4px 0;" onclick="quickInstallCurrentRadar(); event.stopPropagation();">
-                            ${pairName}
-                        </div>
-                        <div style="display:flex; gap:15px; font-size:15px; color:var(--text-secondary); align-items:center; font-family:'JetBrains Mono', monospace;">
-                            <span style="color:var(--short); font-weight:900; font-size:18px;">${change}%</span>
-                            <span style="font-weight:700; font-size:16px;">$${displayPrice}</span>
-                        </div>
-                        ${detailedInfo}
+                    <div style="display:flex; flex-direction:column; gap:4px; align-items:center;">
+                        <div class="radar-zone-badge hot">DETECTADO</div>
+                        <div style="color:var(--text-primary); font-size:24px; font-weight:900;">${pairName}</div>
+                        <div style="color:var(--short); font-size:18px; font-weight:800;">${change}%</div>
+                        <div style="color:var(--text-secondary); font-size:14px;">$${price}</div>
                     </div>
                 `; 
-                
-                // Fade in
                 elVal.style.opacity = 1; 
             }, 200); 
         }
+
         function updateSlotStatus(symbol, currentPrice) { try { slots.forEach((s, idx) => { if(s.name === symbol) { if (s.buys.length === 0 && s.price > 0) { smartPriceAdjustment(s, idx, currentPrice); } if(s.buys.length > 0) { const el = document.getElementById('nav-s'+idx); if(el) { let avg = calculateAvgPriceForSlotData(s, idx); if(avg > 0) { if(currentPrice > avg) { el.classList.remove('has-loss'); el.classList.add('has-profit'); const roiTarget = s.strat === 'dorada' ? strategyParams.dorada.roi : 100; const target = avg * (1 + (roiTarget/100)); if(currentPrice >= target && !s.alerted) { triggerAlert(s.name); s.alerted = true; save(); } } else { el.classList.remove('has-profit'); el.classList.add('has-loss'); s.alerted = false; } } } if(s.buys.includes(0) && tradingMode === 'auto') { checkAndSendNextAutoLevel(s, idx, currentPrice); } } } if(idx === activeIdx && s.name === symbol && s.price > 0) { updateLevelStatesRealTime(s, currentPrice); updateDashboardStats(currentPrice); } }); } catch(e) { console.warn("Heatmap/Auto Error", e); } }
         function updateLevelStatesRealTime(slot, currentPrice) { 
             const limit = customMultipliers ? customMultipliers.length : 12; 
@@ -2941,31 +2350,21 @@
         function triggerHaptic() { if (navigator.vibrate) navigator.vibrate(10); }
         function forceCaps(el) { const start = el.selectionStart; const end = el.selectionEnd; el.value = el.value.toUpperCase(); el.setSelectionRange(start, end); }
         function handleEnter(e) { if(e.key === 'Enter') verifyAndAddCoin(); }
+        
         function startTickerSystem() { 
+            // Ya no iniciamos WebSocket ni rotación de monedas.
+            // Solo actualizamos el saldo inicial.
             if(tickerIntervalId) clearInterval(tickerIntervalId);
-            
-            // Asegurar que tickerAssets tiene valores válidos
-            if(!tickerAssets || tickerAssets.length === 0) {
-                tickerAssets = ["BTC", "ETH", "SUI", "AVAX", "SOL", "BNB"];
-                localStorage.setItem('c5x_ticker_assets', JSON.stringify(tickerAssets));
-            }
-            
-            // Asegurar que assetIdx está en rango válido
-            if(assetIdx < 0 || assetIdx >= tickerAssets.length) {
-                assetIdx = 0;
-                localStorage.setItem('c5x_ticker_index', assetIdx);
-            }
-            
-            updateTicker(); 
-            tickerIntervalId = setInterval(() => { 
-                if(!isTickerPinned && !isHeaderPinnedByScroll) { 
-                    assetIdx = (assetIdx + 1) % tickerAssets.length; 
-                    localStorage.setItem('c5x_ticker_index', assetIdx); 
-                    updateTicker(); 
-                } 
-            }, tickerSpeed * 1000); 
+            fetchWalletBalance();
+            // Actualizar saldo cada 5 segundos
+            tickerIntervalId = setInterval(fetchWalletBalance, 5000);
         }
-        async function updateTicker() { let sym = tickerAssets[assetIdx]; let apiSym = sym.includes('USDT') ? sym : sym + "USDT"; let displaySym = sym.replace("USDT",""); document.getElementById('t-sym').textContent = displaySym; if(currentWs) { if(currentWs.url && currentWs.url.includes(apiSym.toLowerCase())) return; currentWs.close(); currentWs = null; } try { const wsUrl = `wss://stream.binance.com:9443/ws/${apiSym.toLowerCase()}@trade`; currentWs = new WebSocket(wsUrl); currentWs.onmessage = (event) => { const data = JSON.parse(event.data); const price = parseFloat(data.p); updateTickerUI(displaySym, price, true); updateSlotStatus(displaySym, price); document.getElementById('t-dot').classList.add('pulse'); }; currentWs.onerror = () => { fetchTickerRest(apiSym, displaySym); document.getElementById('t-dot').classList.remove('pulse'); }; } catch(e) { fetchTickerRest(apiSym, displaySym); } }
+
+        async function updateTicker() {
+            // Función vaciada para evitar que sobrescriba el saldo con monedas
+            return; 
+        }
+
         async function fetchTickerRest(apiSym, displaySym) { try { let price = 0; let change = null; const gateSym = displaySym + "_USDT"; const data = await callGateApi("GET", "/spot/tickers", {currency_pair: gateSym}); let row = Array.isArray(data) ? data[0] : null; if(row) { price = parseFloat(row.last); change = parseFloat(row.change_percentage); } if(price > 0) { updateTickerUI(displaySym, price, true, change); updateSlotStatus(displaySym, price); } } catch(e) {} }
         function updateTickerUI(sym, price, isUp, change = null) { if (isHeaderPinnedByScroll && sym !== slots[activeIdx].name) return; currentTickerSymbol = sym; let displayPrice = (price < 1) ? price.toFixed(8) : price.toLocaleString(); document.getElementById('t-price').textContent = displayPrice; document.getElementById('t-sym').textContent = sym; document.getElementById('t-dot').style.background = isUp ? 'var(--long)' : 'var(--short)'; const pctEl = document.getElementById('t-pct'); if(change !== null) { pctEl.textContent = (change >= 0 ? '+' : '') + change.toFixed(2) + '%'; pctEl.className = change >= 0 ? 'ticker-pct up' : 'ticker-pct down'; pctEl.style.display = 'inline-block'; } else { const found = allGateETFs.find(t => t.currency_pair === sym + "_USDT"); if(found) { const c = parseFloat(found.change_percentage); pctEl.textContent = (c >= 0 ? '+' : '') + c.toFixed(2) + '%'; pctEl.className = c >= 0 ? 'ticker-pct up' : 'ticker-pct down'; pctEl.style.display = 'inline-block'; } } }
         function toggleFullscreenChart(e) { if(e) e.stopPropagation(); const wrapper = document.getElementById('tv_chart'); wrapper.classList.toggle('fullscreen'); setTimeout(() => loadChart(chartSymbol), 100); }
@@ -3197,44 +2596,307 @@
             return true; 
         } const orderParams = { currency_pair: symbol + '_USDT', side: 'buy', amount: amount, price: price, type: 'limit', time_in_force: 'gtc' }; const response = await callGateApi("POST", "/spot/orders", orderParams, true); if (response && response.id) { activeOrders[key] = { orderId: response.id, status: 'open', price: parseFloat(price), amount: parseFloat(amount), symbol: symbol, timestamp: Date.now(), simulated: false, mode: 'auto' }; updateLevelStatus(levelIndex, 'pending', 'PENDIENTE'); saveActiveOrders(); monitorOrder(levelIndex, response.id); return true; } else { throw new Error("Respuesta inválida de Gate.io"); } } catch (error) { updateLevelStatus(levelIndex, 'error', 'ERROR'); showToast(`❌ Error AUTO N${levelIndex + 1}`); return false; } }
         let priceMonitorInterval = null; let currentAutoLevel = 0; let trailingStopData = {};
-        function startAutoTrading() { const slot = slots[activeIdx]; if (!slot || !slot.name || !slot.price) { tradingMode = 'manual'; updateTradingModeUI(); return; } let startLevel = 0; for (let i = 0; i < 12; i++) { const key = getOrderKey(activeIdx, i); if (activeOrders[key] && activeOrders[key].status === 'filled') { startLevel = i + 1; } else { break; } } if (startLevel >= 12) { showToast("✅ Todos los niveles ya ejecutados"); tradingMode = 'manual'; updateTradingModeUI(); return; } currentAutoLevel = startLevel; showToast(`🤖 AUTO - Enviando nivel ${currentAutoLevel + 1}`); if(!priceMonitorInterval) { priceMonitorInterval = setInterval(() => { runBotCycle(); }, 3000); } }
-        async function runBotCycle() { for(let i=0; i<slots.length; i++) { const s = slots[i]; if (!s || !s.name || !s.price) continue; const liveData = allGateETFs.find(t => t.currency_pair === s.name + "_USDT"); const currentPrice = liveData ? parseFloat(liveData.last) : s.price; if(liveData) updateSlotStatus(s.name, currentPrice); smartPriceAdjustment(s, i, currentPrice); if (i === activeIdx && s.priceAdjusted) { renderLevels(); } if (tradingMode !== 'auto') continue; const realAvg = calculateAvgPriceForSlotData(s, i); if (realAvg > 0) { let roiTarget = 100; if(s.strat === 'dorada') roiTarget = 200; const targetPrice = realAvg * (1 + (roiTarget / 100)); if (!trailingStopData[i]) { trailingStopData[i] = { maxPrice: 0, targetReached: false, targetPrice: targetPrice }; } trailingStopData[i].targetPrice = targetPrice; if (currentPrice >= targetPrice) { trailingStopData[i].targetReached = true; if (currentPrice > trailingStopData[i].maxPrice) { trailingStopData[i].maxPrice = currentPrice; } const stopPrice = trailingStopData[i].maxPrice * 0.95; if (currentPrice <= stopPrice) { await executeAutoSell(s, i, currentPrice, roiTarget); delete trailingStopData[i]; continue; } continue; } } let nextLevel = -1; for (let lvl = 0; lvl < 12; lvl++) { const key = getOrderKey(i, lvl); if (!activeOrders[key] || activeOrders[key].status !== 'filled') { nextLevel = lvl; break; } } if (nextLevel === -1 || nextLevel >= 12) continue; if (nextLevel > 0) { const prevKey = getOrderKey(i, nextLevel - 1); const previousOrder = activeOrders[prevKey]; if (!previousOrder || previousOrder.status !== 'filled') continue; } const nextLevelData = getLevelDataData(s, nextLevel); if (currentPrice <= nextLevelData.price) { const currentKey = getOrderKey(i, nextLevel); if (activeOrders[currentKey] && activeOrders[currentKey].status === 'open') continue; if(i === activeIdx) { await sendAutoLevelOrder(nextLevel); } else { await sendBackgroundOrder(i, nextLevel, nextLevelData); } } } }
-        function calculateAvgPriceForSlotData(s, slotIdx) { if(!s.price) return 0; let totalSpent = 0, totalQty = 0, lastPrice = s.price; const limit = customMultipliers.length || 12; const params = getStrategyParams(s.strat === 'dorada' ? 'dorada' : 'normal'); for(let i=0; i<limit; i++){ let pLevel; let mUSD; if(s.strat === 'dorada') { if(i===0) pLevel = s.price; else pLevel = lastPrice * (1 - (params.inc / 100)); if (i <= 1) mUSD = 10; else if (i <= 3) mUSD = 15; else if (i <= 5) mUSD = 20; else if (i <= 7) mUSD = 25; else if (i <= 9) mUSD = 30; else mUSD = 35; } else { if(i===0) pLevel = s.price; else { const step = getStepForLevel('normal', i); pLevel = lastPrice*(1-(step/100)); } const m = customMultipliers[i]||1; mUSD = m*params.capital; } const key = getOrderKey(slotIdx, i); if(activeOrders[key] && activeOrders[key].status === 'filled') { totalSpent += activeOrders[key].price * activeOrders[key].amount; totalQty += activeOrders[key].amount; } lastPrice = pLevel; } return totalQty > 0 ? totalSpent/totalQty : 0; }
-        function getLevelDataData(s, i) { let currentPrice = s.price; const params = getStrategyParams(s.strat === 'dorada' ? 'dorada' : 'normal'); for (let k = 0; k <= i; k++) { if (k === 0) currentPrice = s.price; else { let step = params.inc; if(s.strat === 'normal') step = (k===1)? params.desc : params.inc; currentPrice = currentPrice * (1 - (step / 100)); } } let multiplier = customMultipliers[i] || 1; let levelCapital = params.capital * multiplier; if (s.strat === 'dorada') { if (i <= 1) levelCapital = 10; else if (i <= 3) levelCapital = 15; else if (i <= 5) levelCapital = 20; else if (i <= 7) levelCapital = 25; else if (i <= 9) levelCapital = 30; else levelCapital = 35; } return { price: currentPrice, qty: levelCapital / currentPrice, usd: levelCapital }; }
-        async function sendBackgroundOrder(slotIdx, levelIndex, data) { const slot = slots[slotIdx]; const symbol = slot.name.toUpperCase(); const key = getOrderKey(slotIdx, levelIndex); if (!isPrivateMode) { activeOrders[key] = { status: 'filled', price: data.price, amount: data.qty, symbol: symbol, timestamp: Date.now() }; saveActiveOrders(); } }
-        async function executeAutoSell(slot, slotIdx, exitPrice, roiTarget) { const keyPrefix = `s${slotIdx}_`; Object.keys(activeOrders).forEach(k => { if(k.startsWith(keyPrefix)) delete activeOrders[k]; }); const log = { date: new Date().toLocaleDateString(), time: 'AUTO', coin: slot.name, profit: 'Calculando...', roi: roiTarget+'%' }; history.push(log); const currentStrat = slot.strat || 'normal'; const currentCapital = currentStrat === 'dorada' ? 10 : 5; const currentRoi = currentStrat === 'dorada' ? strategyParams.dorada.roi : strategyParams.normal.roi; slots[slotIdx] = { name:'', price:0, capital: currentCapital, buys:[], strat: currentStrat, locked: true, roi: currentRoi, note: '', alerted: false }; save(); showToast(`💰 S${slotIdx+1}: TAKE PROFIT EJECUTADO`); if(slotIdx === activeIdx) selectSlot(activeIdx); }
+        function startAutoTrading() { const slot = slots[activeIdx]; if (!slot || !slot.name || !slot.price) { tradingMode = 'manual'; updateTradingModeUI(); return; } let startLevel = 0; for (let i = 0; i < 12; i++) { const key = getOrderKey(activelet priceMonitorInterval = null; let currentAutoLevel = 0; let trailingStopData = {};
+        
+        function startAutoTrading() { 
+            const slot = slots[activeIdx]; 
+            if (!slot || !slot.name || !slot.price) { 
+                tradingMode = 'manual'; 
+                updateTradingModeUI(); 
+                return; 
+            } 
+            let startLevel = 0; 
+            for (let i = 0; i < 12; i++) { 
+                const key = getOrderKey(activeIdx, i); 
+                if (activeOrders[key] && activeOrders[key].status === 'filled') { 
+                    startLevel = i + 1; 
+                } else { 
+                    break; 
+                } 
+            } 
+            if (startLevel >= 12) { 
+                showToast("✅ Todos los niveles ya ejecutados"); 
+                tradingMode = 'manual'; 
+                updateTradingModeUI(); 
+                return; 
+            } 
+            currentAutoLevel = startLevel; 
+            showToast(`🤖 AUTO - Enviando nivel ${currentAutoLevel + 1}`); 
+            if(!priceMonitorInterval) { 
+                priceMonitorInterval = setInterval(() => { runBotCycle(); }, 3000); 
+            } 
+        }
+
+        async function runBotCycle() { 
+            for(let i=0; i<slots.length; i++) { 
+                const s = slots[i]; 
+                if (!s || !s.name || !s.price) continue; 
+                
+                // Actualizar precio con datos en vivo si existen
+                const liveData = allGateETFs.find(t => t.currency_pair === s.name + "_USDT"); 
+                const currentPrice = liveData ? parseFloat(liveData.last) : s.price; 
+                
+                if(liveData) updateSlotStatus(s.name, currentPrice); 
+                
+                // Ajuste inteligente de precio base si cae antes de comprar
+                smartPriceAdjustment(s, i, currentPrice); 
+                
+                if (i === activeIdx && s.priceAdjusted) { renderLevels(); } 
+                
+                if (tradingMode !== 'auto') continue; 
+                
+                // Lógica de Take Profit / Trailing Stop
+                const realAvg = calculateAvgPriceForSlotData(s, i); 
+                if (realAvg > 0) { 
+                    let roiTarget = 100; 
+                    if(s.strat === 'dorada') roiTarget = 200; 
+                    
+                    const targetPrice = realAvg * (1 + (roiTarget / 100)); 
+                    
+                    if (!trailingStopData[i]) { 
+                        trailingStopData[i] = { maxPrice: 0, targetReached: false, targetPrice: targetPrice }; 
+                    } 
+                    trailingStopData[i].targetPrice = targetPrice; 
+                    
+                    if (currentPrice >= targetPrice) { 
+                        trailingStopData[i].targetReached = true; 
+                        if (currentPrice > trailingStopData[i].maxPrice) { 
+                            trailingStopData[i].maxPrice = currentPrice; 
+                        } 
+                        const stopPrice = trailingStopData[i].maxPrice * 0.95; // 5% trailing
+                        
+                        if (currentPrice <= stopPrice) { 
+                            await executeAutoSell(s, i, currentPrice, roiTarget); 
+                            delete trailingStopData[i]; 
+                            continue; 
+                        } 
+                        continue; 
+                    } 
+                } 
+                
+                // Lógica de Compra de Niveles
+                let nextLevel = -1; 
+                for (let lvl = 0; lvl < 12; lvl++) { 
+                    const key = getOrderKey(i, lvl); 
+                    if (!activeOrders[key] || activeOrders[key].status !== 'filled') { 
+                        nextLevel = lvl; 
+                        break; 
+                    } 
+                } 
+                
+                if (nextLevel === -1 || nextLevel >= 12) continue; 
+                
+                // Verificar que el nivel anterior esté lleno (secuencia estricta)
+                if (nextLevel > 0) { 
+                    const prevKey = getOrderKey(i, nextLevel - 1); 
+                    const previousOrder = activeOrders[prevKey]; 
+                    if (!previousOrder || previousOrder.status !== 'filled') continue; 
+                } 
+                
+                const nextLevelData = getLevelDataData(s, nextLevel); 
+                if (currentPrice <= nextLevelData.price) { 
+                    const currentKey = getOrderKey(i, nextLevel); 
+                    if (activeOrders[currentKey] && activeOrders[currentKey].status === 'open') continue; 
+                    
+                    if(i === activeIdx) { 
+                        await sendAutoLevelOrder(nextLevel); 
+                    } else { 
+                        await sendBackgroundOrder(i, nextLevel, nextLevelData); 
+                    } 
+                } 
+            } 
+        }
+
+        function calculateAvgPriceForSlotData(s, slotIdx) { 
+            if(!s.price) return 0; 
+            let totalSpent = 0, totalQty = 0, lastPrice = s.price; 
+            const limit = customMultipliers.length || 12; 
+            const params = getStrategyParams(s.strat === 'dorada' ? 'dorada' : 'normal'); 
+            
+            for(let i=0; i<limit; i++){ 
+                let pLevel; let mUSD; 
+                if(s.strat === 'dorada') { 
+                    if(i===0) pLevel = s.price; else pLevel = lastPrice * (1 - (params.inc / 100)); 
+                    if (i <= 1) mUSD = 10; else if (i <= 3) mUSD = 15; else if (i <= 5) mUSD = 20; else if (i <= 7) mUSD = 25; else if (i <= 9) mUSD = 30; else mUSD = 35; 
+                } else { 
+                    if(i===0) pLevel = s.price; else { 
+                        const step = getStepForLevel('normal', i); 
+                        pLevel = lastPrice*(1-(step/100)); 
+                    } 
+                    const m = customMultipliers[i]||1; 
+                    mUSD = m*params.capital; 
+                } 
+                const key = getOrderKey(slotIdx, i); 
+                if(activeOrders[key] && activeOrders[key].status === 'filled') { 
+                    totalSpent += activeOrders[key].price * activeOrders[key].amount; 
+                    totalQty += activeOrders[key].amount; 
+                } 
+                lastPrice = pLevel; 
+            } 
+            return totalQty > 0 ? totalSpent/totalQty : 0; 
+        }
+
+        function getLevelDataData(s, i) { 
+            let currentPrice = s.price; 
+            const params = getStrategyParams(s.strat === 'dorada' ? 'dorada' : 'normal'); 
+            for (let k = 0; k <= i; k++) { 
+                if (k === 0) currentPrice = s.price; else { 
+                    let step = params.inc; 
+                    if(s.strat === 'normal') step = (k===1)? params.desc : params.inc; 
+                    currentPrice = currentPrice * (1 - (step / 100)); 
+                } 
+            } 
+            let multiplier = customMultipliers[i] || 1; 
+            let levelCapital = params.capital * multiplier; 
+            if (s.strat === 'dorada') { 
+                if (i <= 1) levelCapital = 10; else if (i <= 3) levelCapital = 15; else if (i <= 5) levelCapital = 20; else if (i <= 7) levelCapital = 25; else if (i <= 9) levelCapital = 30; else levelCapital = 35; 
+            } 
+            return { price: currentPrice, qty: levelCapital / currentPrice, usd: levelCapital }; 
+        }
+
+        async function sendBackgroundOrder(slotIdx, levelIndex, data) { 
+            const slot = slots[slotIdx]; 
+            const symbol = slot.name.toUpperCase(); 
+            const key = getOrderKey(slotIdx, levelIndex); 
+            if (!isPrivateMode) { 
+                // Simulación en segundo plano
+                activeOrders[key] = { status: 'filled', price: data.price, amount: data.qty, symbol: symbol, timestamp: Date.now() }; 
+                saveActiveOrders(); 
+            } 
+        }
+
+        async function executeAutoSell(slot, slotIdx, exitPrice, roiTarget) { 
+            const keyPrefix = `s${slotIdx}_`; 
+            Object.keys(activeOrders).forEach(k => { if(k.startsWith(keyPrefix)) delete activeOrders[k]; }); 
+            const log = { date: new Date().toLocaleDateString(), time: 'AUTO', coin: slot.name, profit: 'Calculando...', roi: roiTarget+'%' }; 
+            history.push(log); 
+            
+            const currentStrat = slot.strat || 'normal'; 
+            const currentCapital = currentStrat === 'dorada' ? 10 : 5; 
+            const currentRoi = currentStrat === 'dorada' ? strategyParams.dorada.roi : strategyParams.normal.roi; 
+            
+            slots[slotIdx] = { name:'', price:0, capital: currentCapital, buys:[], strat: currentStrat, locked: true, roi: currentRoi, note: '', alerted: false, multipleBuys: {} }; 
+            save(); 
+            showToast(`💰 S${slotIdx+1}: TAKE PROFIT EJECUTADO`); 
+            if(slotIdx === activeIdx) selectSlot(activeIdx); 
+        }
+
         function stopAutoTrading() { console.log("Modo manual activado"); }
-        function sendNextAutoLevel() { if (tradingMode !== 'auto') return; const slot = slots[activeIdx]; if (!slot.name || !slot.price) return; for (let i = 0; i < 12; i++) { const key = getOrderKey(activeIdx, i); if (!activeOrders[key] || activeOrders[key].status !== 'filled') { const data = getLevelData(slot, i); sendAutoLevelOrder(i); break; } } }
-        function checkAndSendNextAutoLevel(slot, slotIdx, currentPrice) { if (tradingMode !== 'auto') return; for (let i = 0; i < 12; i++) { const key = getOrderKey(slotIdx, i); if (!activeOrders[key] || activeOrders[key].status !== 'filled') { const levelData = getLevelDataData(slot, i); if (currentPrice <= levelData.price) { if (slotIdx === activeIdx) { sendAutoLevelOrder(i); } } break; } } }
-        function smartPriceAdjustment(slot, slotIdx, currentPrice) { if (!slot.buys || slot.buys.length > 0) return false; let hasActiveOrders = false; for (let i = 0; i < 12; i++) { const key = getOrderKey(slotIdx, i); if (activeOrders[key]) { hasActiveOrders = true; break; } } if (hasActiveOrders) return false; const initialPrice = slot.initialPrice || slot.price; const currentBasePrice = slot.price; if (currentPrice < currentBasePrice) { const oldPrice = slot.price; slot.price = currentPrice; if (!slot.initialPrice) { slot.initialPrice = oldPrice; } slot.priceAdjusted = true; save(); const dropPercent = ((oldPrice - currentPrice) / oldPrice * 100).toFixed(1); showToast(`📉 ${slot.name}: Precio base ajustado de $${oldPrice.toFixed(6)} → $${currentPrice.toFixed(6)} (-${dropPercent}%)`, 4000, false, true); if (slotIdx === activeIdx) { document.getElementById('baseInput').value = currentPrice; const indicator = document.getElementById('priceAdjustIndicator'); if (indicator) { indicator.style.display = 'block'; indicator.title = `Ajustado automáticamente desde $${initialPrice.toFixed(6)}`; } calculate(); renderLevels(); } return true; } return false; }
+
+        function sendNextAutoLevel() { 
+            if (tradingMode !== 'auto') return; 
+            const slot = slots[activeIdx]; 
+            if (!slot.name || !slot.price) return; 
+            for (let i = 0; i < 12; i++) { 
+                const key = getOrderKey(activeIdx, i); 
+                if (!activeOrders[key] || activeOrders[key].status !== 'filled') { 
+                    const data = getLevelData(slot, i); 
+                    sendAutoLevelOrder(i); 
+                    break; 
+                } 
+            } 
+        }
+
+        function checkAndSendNextAutoLevel(slot, slotIdx, currentPrice) { 
+            if (tradingMode !== 'auto') return; 
+            for (let i = 0; i < 12; i++) { 
+                const key = getOrderKey(slotIdx, i); 
+                if (!activeOrders[key] || activeOrders[key].status !== 'filled') { 
+                    const levelData = getLevelDataData(slot, i); 
+                    if (currentPrice <= levelData.price) { 
+                        if (slotIdx === activeIdx) { sendAutoLevelOrder(i); } 
+                    } 
+                    break; 
+                } 
+            } 
+        }
+
+        function smartPriceAdjustment(slot, slotIdx, currentPrice) { 
+            if (!slot.buys || slot.buys.length > 0) return false; 
+            let hasActiveOrders = false; 
+            for (let i = 0; i < 12; i++) { 
+                const key = getOrderKey(slotIdx, i); 
+                if (activeOrders[key]) { hasActiveOrders = true; break; } 
+            } 
+            if (hasActiveOrders) return false; 
+            
+            const initialPrice = slot.initialPrice || slot.price; 
+            const currentBasePrice = slot.price; 
+            
+            if (currentPrice < currentBasePrice) { 
+                const oldPrice = slot.price; 
+                slot.price = currentPrice; 
+                if (!slot.initialPrice) { slot.initialPrice = oldPrice; } 
+                slot.priceAdjusted = true; 
+                save(); 
+                const dropPercent = ((oldPrice - currentPrice) / oldPrice * 100).toFixed(1); 
+                showToast(`📉 ${slot.name}: Precio base ajustado de $${oldPrice.toFixed(6)} → $${currentPrice.toFixed(6)} (-${dropPercent}%)`, 4000, false, true); 
+                
+                if (slotIdx === activeIdx) { 
+                    document.getElementById('baseInput').value = currentPrice; 
+                    const indicator = document.getElementById('priceAdjustIndicator'); 
+                    if (indicator) { 
+                        indicator.style.display = 'block'; 
+                        indicator.title = `Ajustado automáticamente desde $${initialPrice.toFixed(6)}`; 
+                    } 
+                    calculate(); 
+                    renderLevels(); 
+                } 
+                return true; 
+            } 
+            return false; 
+        }
+
         function toggleLevelsVisibility() { 
             const container = document.getElementById('levelsGrid'); 
             const investmentBox = document.getElementById('investmentBox'); 
             const icon = investmentBox.querySelector('.expand-icon'); 
             
             if (container.classList.contains('collapsed')) { 
-                // EXPANDIR - mostrar niveles con scroll
                 container.classList.remove('collapsed'); 
-                container.style.maxHeight = ''; // Remover estilo inline para usar CSS
+                container.style.maxHeight = ''; 
                 container.style.opacity = ''; 
                 container.style.paddingTop = ''; 
                 container.style.paddingBottom = ''; 
-                container.style.overflow = ''; // Permitir scroll del CSS
+                container.style.overflow = ''; 
                 
                 if(icon) icon.classList.remove('expanded'); 
                 const btn = document.getElementById('btnToggleLevels'); 
                 if(btn) btn.classList.remove('active'); 
             } else { 
-                // COLAPSAR - ocultar niveles
                 container.classList.add('collapsed'); 
-                
                 if(icon) icon.classList.add('expanded'); 
                 const btn = document.getElementById('btnToggleLevels'); 
                 if(btn) btn.classList.add('active'); 
             } 
         }
         function toggleLevelsVisibilityExplicit() { toggleLevelsVisibility(); triggerHaptic(); }
-        async function executeGateOrder() { closeModals(); if(!apiConfig.key || !apiConfig.secret) { return; } showToast("⏳ Enviando Orden a Gate.io..."); const body = { "currency_pair": document.getElementById('trade-pair').textContent, "side": "buy", "amount": document.getElementById('trade-amount').textContent, "price": document.getElementById('trade-price').textContent, "type": "limit", "account": "spot", "time_in_force": "gtc" }; try { const result = await callGateApi("POST", "/spot/orders", body, true); if (result && result.id) { showToast(`✅ ORDEN EXITOSA ID: ${result.id}`, 4000, false, true); setTimeout(fetchWalletBalance, 1500); } else { throw new Error("Respuesta inválida de Gate.io"); } } catch (e) { console.warn("❌ Error creando orden:", e.message); showToast("⚠️ Error en Orden", 2000); } }
+
+        async function executeGateOrder() { 
+            closeModals(); 
+            if(!apiConfig.key || !apiConfig.secret) { return; } 
+            showToast("⏳ Enviando Orden a Gate.io..."); 
+            const body = { 
+                "currency_pair": document.getElementById('trade-pair').textContent, 
+                "side": "buy", 
+                "amount": document.getElementById('trade-amount').textContent, 
+                "price": document.getElementById('trade-price').textContent, 
+                "type": "limit", 
+                "account": "spot", 
+                "time_in_force": "gtc" 
+            }; 
+            try { 
+                const result = await callGateApi("POST", "/spot/orders", body, true); 
+                if (result && result.id) { 
+                    showToast(`✅ ORDEN EXITOSA ID: ${result.id}`, 4000, false, true); 
+                    setTimeout(fetchWalletBalance, 1500); 
+                } else { throw new Error("Respuesta inválida de Gate.io"); } 
+            } catch (e) { 
+                console.warn("❌ Error creando orden:", e.message); 
+                showToast("⚠️ Error en Orden", 2000); 
+            } 
+        }
+
         function openLiquidateConfirm() { triggerHaptic(); const s = slots[activeIdx]; if(!s.name || s.price <= 0) return showToast("⚠️ Slot Vacío"); document.getElementById('confirmModal').style.display = 'flex'; }
         
         function executeRelease() { 
@@ -3252,22 +2914,38 @@
                 const totalFees = entryFee + exitFee; 
                 const grossProfit = grossExitValue - totalInv; 
                 const netProfit = grossProfit - totalFees; 
-                const logEntry = { date: new Date().toLocaleDateString(), time: new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}), coin: s.name || 'S/N', strategy: s.strat.toUpperCase(), basePrice: s.price, avgPrice: avgPrice, exitPrice: targetPrice, qty: (avgPrice > 0 ? totalInv/avgPrice : 0).toFixed(8), totalInv: totalInv.toFixed(2), profit: grossProfit.toFixed(2), netProfit: netProfit.toFixed(2), fees: totalFees.toFixed(2), roi: roiTarget + '%', levelsUsed: s.buys ? s.buys.length : 0, isSimulated: false, simulated: false }; 
+                
+                const logEntry = { 
+                    date: new Date().toLocaleDateString(), 
+                    time: new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}), 
+                    coin: s.name || 'S/N', 
+                    strategy: s.strat.toUpperCase(), 
+                    basePrice: s.price, 
+                    avgPrice: avgPrice, 
+                    exitPrice: targetPrice, 
+                    qty: (avgPrice > 0 ? totalInv/avgPrice : 0).toFixed(8), 
+                    totalInv: totalInv.toFixed(2), 
+                    profit: grossProfit.toFixed(2), 
+                    netProfit: netProfit.toFixed(2), 
+                    fees: totalFees.toFixed(2), 
+                    roi: roiTarget + '%', 
+                    levelsUsed: s.buys ? s.buys.length : 0, 
+                    isSimulated: false, simulated: false 
+                }; 
                 if(!history) history = []; 
                 history.push(logEntry); 
                 localStorage.setItem('c5x_history', JSON.stringify(history)); 
                 renderHistory(); 
+                
                 const currentStrat = s.strat || 'normal'; 
                 const currentCapital = currentStrat === 'dorada' ? 10 : 5; 
                 const currentRoi = currentStrat === 'dorada' ? strategyParams.dorada.roi : strategyParams.normal.roi; 
-                slots[activeIdx] = { name:'', price:0, capital: currentCapital, buys:[], strat: currentStrat, locked: true, roi: currentRoi, note: '', alerted: false }; 
+                slots[activeIdx] = { name:'', price:0, capital: currentCapital, buys:[], strat: currentStrat, locked: true, roi: currentRoi, note: '', alerted: false, multipleBuys: {} }; 
                 activeOrders = {}; 
                 saveActiveOrders(); 
                 
-                sortSlots();
-                
-                selectSlot(0);
-                
+                sortSlots(); 
+                selectSlot(0); 
                 showToast(`✅ Cerrada. Neta: $${netProfit.toFixed(2)}`); 
                 switchView('log', false); 
                 calculateGlobalStats(); 
@@ -3275,156 +2953,36 @@
         }
         
         function updateBodyMode(n) { const r = document.querySelector(':root'); if(!n) { r.style.setProperty('--brand', '#3b82f6'); return; } if(n.includes('3S') || n.includes('5S') || n.endsWith('S')) { r.style.setProperty('--brand', 'var(--short)'); } else if (n.includes('3L') || n.includes('5L') || n.endsWith('L')) { r.style.setProperty('--brand', 'var(--long)'); } else { r.style.setProperty('--brand', '#3b82f6'); } }
-        function renderHistory() { const grid = document.getElementById('logGrid'); if(!history || history.length === 0) { grid.innerHTML = '<div style="text-align:center; padding:20px; color:var(--text-secondary)">Sin registros</div>'; return; } grid.innerHTML = history.map(h => { const hasNet = h.netProfit !== undefined; const finalProfit = hasNet ? parseFloat(h.netProfit) : parseFloat(h.profit); const isWin = finalProfit >= 0; const nameColor = getCoinColor(h.coin); return `<div class="unified-card"><div class="u-index" style="color:var(--brand); border-color:var(--brand)">${h.coin.substring(0,3)}</div><div class="u-center"><div class="u-title" style="color:${nameColor}">${h.coin}</div><div class="u-sub">${h.date} - ${h.time}</div></div><div class="u-right"><div class="u-val-primary" style="color:${isWin?'var(--long)':'var(--short)'}"> ${isWin?'+':''}$${finalProfit.toFixed(2)}</div><div class="u-val-secondary">${hasNet ? 'NETO' : 'BRUTO'} ${h.roi}</div></div></div>`; }).reverse().join(''); updateGeneralDashboard(); }
+        function renderHistory() { const grid = document.getElementById('logGrid'); if(!history || history.length === 0) { grid.innerHTML = '<div style="text-align:center; padding:20px; color:var(--text-secondary)">Sin registros</div>'; return; } grid.innerHTML = history.map(h => { const hasNet = h.netProfit !== undefined; const finalProfit = hasNet ? parseFloat(h.netProfit) : parseFloat(h.profit); const isWin = finalProfit >= 0; const nameColor = getCoinColor(h.coin); return `<div class="unified-card"><div class="u-index" style="color:var(--brand); border-color:var(--brand)">${h.coin.substring(0,3)}</div><div class="u-center"><div class="u-title" style="color:${nameColor}">${h.coin}</div><div class="u-sub">${h.date} - ${h.time}</div></div><div class="u-right"><div class="u-val-primary" style="color:${isWin?'var(--long)':'var(--short)'}">${isWin?'+':''}$${finalProfit.toFixed(2)}</div><div class="u-val-secondary">${hasNet ? 'NETO' : 'BRUTO'} ${h.roi}</div></div></div>`; }).reverse().join(''); }
         function triggerDriveBackup() { const dataStr = JSON.stringify({ slots, history, tickerAssets, customMultipliers, etfFavorites, globalCapital, appConfig }); const blob = new Blob([dataStr], {type: "application/json"}); const a = document.createElement('a'); const date = new Date().toISOString().slice(0,10); a.href = URL.createObjectURL(blob); a.download = "C5X_Backup.json"; document.body.appendChild(a); a.click(); localStorage.setItem('c5x_last_backup', Date.now()); showToast("☁️ Archivo generado para Drive"); }
         function checkAutoBackup() { const last = localStorage.getItem('c5x_last_backup'); const now = Date.now(); if(!last || (now - last > 2592000000)) { if(confirm("⚠️ Han pasado 30 días desde tu último respaldo. ¿Guardar en Drive ahora?")) { triggerDriveBackup(); } } }
         function openSecurity(cb) { secCallback = cb; document.getElementById('secInput').value = ''; document.getElementById('securityModal').style.display = 'flex'; }
         function closeModals() { document.querySelectorAll('.generic-modal').forEach(m => m.style.display = 'none'); }
         function clearAllActiveOrders() { if (confirm("¿Limpiar TODAS las órdenes activas?")) { activeOrders = {}; saveActiveOrders(); updateLevelsUI(); renderLevels(); showToast("✅ Órdenes limpiadas"); } }
+        
         function save() { 
-            // Guardar TODOS los slots de forma agresiva
             try {
                 localStorage.setItem('c5x_slots', JSON.stringify(slots));
                 localStorage.setItem('c5x_slots_real', JSON.stringify(slots)); 
                 localStorage.setItem('c5x_last_slot', activeIdx);
-                
-                // Guardar cada componente individual
                 saveInvestmentValue();
                 saveSlotsLevels();
                 
-                // Guardar backup adicional de buys y multipleBuys
                 const buysBackup = {};
                 const multipleBuysBackup = {};
                 slots.forEach((s, idx) => {
-                    if (s.buys && s.buys.length > 0) {
-                        buysBackup[idx] = s.buys;
-                    }
-                    if (s.multipleBuys && Object.keys(s.multipleBuys).length > 0) {
-                        multipleBuysBackup[idx] = s.multipleBuys;
-                    }
+                    if (s.buys && s.buys.length > 0) { buysBackup[idx] = s.buys; }
+                    if (s.multipleBuys && Object.keys(s.multipleBuys).length > 0) { multipleBuysBackup[idx] = s.multipleBuys; }
                 });
                 localStorage.setItem('c5x_buys_backup', JSON.stringify(buysBackup));
                 localStorage.setItem('c5x_multibuys_backup', JSON.stringify(multipleBuysBackup));
-                
-                console.log('✅ Guardado completo:', slots.map((s, i) => `Slot ${i+1}: ${s.name || 'vacío'}`));
-            } catch (e) {
-                console.error('❌ Error al guardar:', e);
-            }
+            } catch (e) { console.error('❌ Error al guardar:', e); }
         }
         
-        function saveInvestmentValue() {
-            const s = slots[activeIdx];
-            if (s && s.capital) {
-                const investmentData = { slotIndex: activeIdx, capital: s.capital, timestamp: Date.now() };
-                localStorage.setItem('c5x_investment_value', JSON.stringify(investmentData));
-            }
-        }
-        
-        function saveSlotsLevels() {
-            const slotsData = slots.map((s, idx) => { 
-                // Calcular y guardar el promedio actual
-                let avgPrice = 0;
-                let totalInv = 0;
-                let totalQty = 0;
-                
-                for (let i = 0; i < 12; i++) {
-                    const key = getOrderKey(idx, i);
-                    if (activeOrders[key] && activeOrders[key].status === 'filled') {
-                        totalInv += activeOrders[key].price * activeOrders[key].amount;
-                        totalQty += activeOrders[key].amount;
-                    } else if (s.buys && s.buys.includes(i)) {
-                        const d = getLevelData(s, i);
-                        totalInv += d.usd;
-                        totalQty += d.qty;
-                    }
-                    if (s.multipleBuys && s.multipleBuys[i]) {
-                        for (let buy of s.multipleBuys[i]) {
-                            totalInv += buy.usd;
-                            totalQty += buy.qty;
-                        }
-                    }
-                }
-                
-                avgPrice = totalQty > 0 ? totalInv / totalQty : 0;
-                
-                return { 
-                    index: idx, 
-                    name: s.name, 
-                    price: s.price, 
-                    capital: s.capital, 
-                    buys: s.buys || [], 
-                    strat: s.strat, 
-                    roi: s.roi, 
-                    locked: s.locked, 
-                    note: s.note || '', 
-                    alerted: s.alerted || false,
-                    avgPrice: avgPrice,
-                    multipleBuys: s.multipleBuys || {}
-                }; 
-            });
-            localStorage.setItem('c5x_slots_levels_data', JSON.stringify(slotsData));
-        }
-        
-        function loadInvestmentValue() {
-            const saved = localStorage.getItem('c5x_investment_value');
-            if (saved) {
-                try {
-                    const data = JSON.parse(saved);
-                    const s = slots[data.slotIndex];
-                    if (s && data.capital) { s.capital = data.capital; }
-                } catch(e) { console.warn("Error cargando valor de inversión:", e); }
-            }
-        }
-        
-        function loadSlotsLevels() {
-            const saved = localStorage.getItem('c5x_slots_levels_data');
-            if (saved) {
-                try {
-                    const slotsData = JSON.parse(saved);
-                    slotsData.forEach(data => {
-                        if (data.index >= 0 && data.index < slots.length) {
-                            const s = slots[data.index];
-                            if (data.buys) s.buys = data.buys;
-                            if (data.price) s.price = data.price;
-                            if (data.capital) s.capital = data.capital;
-                            if (data.strat) s.strat = data.strat;
-                            if (data.roi) s.roi = data.roi;
-                            if (data.avgPrice) s.avgPrice = data.avgPrice;
-                            if (data.multipleBuys) s.multipleBuys = data.multipleBuys;
-                        }
-                    });
-                } catch(e) { console.warn("Error cargando niveles de slots:", e); }
-            }
-            
-            // Cargar backups adicionales de buys y multipleBuys
-            try {
-                const buysBackup = localStorage.getItem('c5x_buys_backup');
-                if (buysBackup) {
-                    const buysData = JSON.parse(buysBackup);
-                    Object.keys(buysData).forEach(idx => {
-                        const index = parseInt(idx);
-                        if (index >= 0 && index < slots.length) {
-                            slots[index].buys = buysData[idx];
-                        }
-                    });
-                }
-                
-                const multipleBuysBackup = localStorage.getItem('c5x_multibuys_backup');
-                if (multipleBuysBackup) {
-                    const multiData = JSON.parse(multipleBuysBackup);
-                    Object.keys(multiData).forEach(idx => {
-                        const index = parseInt(idx);
-                        if (index >= 0 && index < slots.length) {
-                            slots[index].multipleBuys = multiData[idx];
-                        }
-                    });
-                }
-                
-                console.log('✅ Slots cargados:', slots.map((s, i) => `Slot ${i+1}: ${s.name || 'vacío'} - Buys: ${s.buys?.length || 0}, MultiBuys: ${Object.keys(s.multipleBuys || {}).length}`));
-            } catch(e) {
-                console.warn("Error cargando backups:", e);
-            }
-        }
+        function saveInvestmentValue() { const s = slots[activeIdx]; if (s && s.capital) { const investmentData = { slotIndex: activeIdx, capital: s.capital, timestamp: Date.now() }; localStorage.setItem('c5x_investment_value', JSON.stringify(investmentData)); } }
+        function saveSlotsLevels() { const slotsData = slots.map((s, idx) => { let avgPrice = 0; let totalInv = 0; let totalQty = 0; for (let i = 0; i < 12; i++) { const key = getOrderKey(idx, i); if (activeOrders[key] && activeOrders[key].status === 'filled') { totalInv += activeOrders[key].price * activeOrders[key].amount; totalQty += activeOrders[key].amount; } else if (s.buys && s.buys.includes(i)) { const d = getLevelData(s, i); totalInv += d.usd; totalQty += d.qty; } if (s.multipleBuys && s.multipleBuys[i]) { for (let buy of s.multipleBuys[i]) { totalInv += buy.usd; totalQty += buy.qty; } } } avgPrice = totalQty > 0 ? totalInv / totalQty : 0; return { index: idx, name: s.name, price: s.price, capital: s.capital, buys: s.buys || [], strat: s.strat, roi: s.roi, locked: s.locked, note: s.note || '', alerted: s.alerted || false, avgPrice: avgPrice, multipleBuys: s.multipleBuys || {} }; }); localStorage.setItem('c5x_slots_levels_data', JSON.stringify(slotsData)); }
+        function loadInvestmentValue() { const saved = localStorage.getItem('c5x_investment_value'); if (saved) { try { const data = JSON.parse(saved); const s = slots[data.slotIndex]; if (s && data.capital) { s.capital = data.capital; } } catch(e) {} } }
+        function loadSlotsLevels() { const saved = localStorage.getItem('c5x_slots_levels_data'); if (saved) { try { const slotsData = JSON.parse(saved); slotsData.forEach(data => { if (data.index >= 0 && data.index < slots.length) { const s = slots[data.index]; if (data.buys) s.buys = data.buys; if (data.price) s.price = data.price; if (data.capital) s.capital = data.capital; if (data.strat) s.strat = data.strat; if (data.roi) s.roi = data.roi; if (data.avgPrice) s.avgPrice = data.avgPrice; if (data.multipleBuys) s.multipleBuys = data.multipleBuys; } }); } catch(e) {} } try { const buysBackup = localStorage.getItem('c5x_buys_backup'); if (buysBackup) { const buysData = JSON.parse(buysBackup); Object.keys(buysData).forEach(idx => { const index = parseInt(idx); if (index >= 0 && index < slots.length) { slots[index].buys = buysData[idx]; } }); } const multipleBuysBackup = localStorage.getItem('c5x_multibuys_backup'); if (multipleBuysBackup) { const multiData = JSON.parse(multipleBuysBackup); Object.keys(multiData).forEach(idx => { const index = parseInt(idx); if (index >= 0 && index < slots.length) { slots[index].multipleBuys = multiData[idx]; } }); } } catch(e) {} }
         function clearLogs() { openSecurity(() => { history = []; localStorage.setItem('c5x_history', JSON.stringify(history)); renderHistory(); calculateGlobalStats(); showToast("🗑️ Historial Borrado"); }); }
         function resetApp() { openSecurity(() => { localStorage.clear(); location.reload(); }); }
         function loadSettingsValues() { try { const s = slots[activeIdx]; const elCapNormal = document.getElementById('setCapitalNormal'); if(elCapNormal) elCapNormal.value = strategyParams.normal.capital; const elRoiNormal = document.getElementById('setRoiNormal'); if(elRoiNormal) elRoiNormal.value = strategyParams.normal.roi; const elIncNormal = document.getElementById('setIncNormal'); if(elIncNormal) elIncNormal.value = strategyParams.normal.inc; const elDescNormal = document.getElementById('setDescNormal'); if(elDescNormal) elDescNormal.value = strategyParams.normal.desc; const elDDNormal = document.getElementById('setDDNormal'); if(elDDNormal) elDDNormal.value = strategyParams.normal.dd; const elCapDorada = document.getElementById('setCapitalDorada'); if(elCapDorada) elCapDorada.value = strategyParams.dorada.capital; const elRoiDorada = document.getElementById('setRoiDorada'); if(elRoiDorada) elRoiDorada.value = strategyParams.dorada.roi; const elIncDorada = document.getElementById('setIncDorada'); if(elIncDorada) elIncDorada.value = strategyParams.dorada.inc; const elDDDorada = document.getElementById('setDDDorada'); if(elDDDorada) elDDDorada.value = strategyParams.dorada.dd; const elGlobCap = document.getElementById('setGlobalCapital'); if(elGlobCap) elGlobCap.value = globalCapital; const elFee = document.getElementById('setFee'); if(elFee) elFee.value = exchangeFee; const elRadarLim = document.getElementById('setRadarLimit'); if(elRadarLim) elRadarLim.value = radarLimit; const elRadarSpd = document.getElementById('setRadarSpeed'); if(elRadarSpd) elRadarSpd.value = radarSpeed; const elTickSpd = document.getElementById('setTickerSpeed'); if(elTickSpd) elTickSpd.value = tickerSpeed; const elAutoAdj = document.getElementById('setAutoAdjustThreshold'); if(elAutoAdj) elAutoAdj.value = autoAdjustThreshold; const elPass = document.getElementById('setNewPass'); if(elPass) elPass.value = ''; if(apiConfig.key) document.getElementById('apiKey').value = apiConfig.key; if(apiConfig.secret) document.getElementById('apiSecret').value = apiConfig.secret; const grid = document.getElementById('multiGrid'); if(grid) { grid.innerHTML = customMultipliers.map((val, i) => `<div class="multi-item"><span class="multi-lbl">N${i+1}</span><input type="number" class="multi-inp" value="${val}" step="0.1"></div>`).join(''); } calcMonthlyPerformance(); } catch(e) { console.warn("Error cargando ajustes", e); } }
@@ -3433,59 +2991,48 @@
         function renderTickerSettings() { let html = ''; for(let i=0; i<12; i++) { let coin = tickerAssets[i] || ""; let cls = coin ? "filled" : ""; html += `<div class="multi-item ${cls}"><span class="multi-lbl">SLOT ${i+1}</span><input type="text" class="multi-inp" value="${coin.replace('USDT','')}" placeholder="---" onchange="updateTickerCoin(${i}, this.value)" oninput="forceCaps(this)" style="text-transform: uppercase;"></div>`; } document.getElementById('tickerChipsContainer').innerHTML = html; }
         function updateTickerCoin(index, value) { let val = value.toUpperCase().trim().replace('USDT',''); if (val) { tickerAssets[index] = val; } else { tickerAssets[index] = ""; } localStorage.setItem('c5x_ticker_assets', JSON.stringify(tickerAssets)); showToast("✅ Ticker Actualizado"); }
         function removeTickerCoin(i) { tickerAssets.splice(i,1); localStorage.setItem('c5x_ticker_assets', JSON.stringify(tickerAssets)); renderTickerSettings(); }
-        function exportPDF() { if(history.length === 0) return showToast("⚠️ Sin Datos"); const { jsPDF } = window.jspdf; const doc = new jsPDF('l', 'mm', 'a4'); let totalProfit = 0; let totalInvested = 0; let wins = 0; history.forEach(h => { const inv = parseFloat(h.totalInv) || 0; const prof = (h.netProfit !== undefined ? parseFloat(h.netProfit) : parseFloat(h.profit)) || 0; totalInvested += inv; totalProfit += prof; if(prof > 0) wins++; }); const winRate = history.length > 0 ? ((wins / history.length) * 100).toFixed(1) : 0; doc.setFillColor(11, 14, 17); doc.rect(0, 0, 297, 25, 'F'); doc.setFont("helvetica", "bold"); doc.setFontSize(22); doc.setTextColor(59, 130, 246); doc.text("C5X", 14, 16); doc.setFontSize(14); doc.setTextColor(255, 255, 255); doc.text("REPORTE PROFESIONAL", 40, 16); doc.setFillColor(245, 247, 250); doc.rect(14, 30, 270, 20, 'F'); doc.setFontSize(10); doc.setTextColor(80); doc.text("CAPITAL MOVIDO", 20, 38); doc.text("NET PROFIT", 90, 38); doc.text("WIN RATE", 160, 38); doc.text("TOTAL OPS", 230, 38); doc.setFontSize(14); doc.setTextColor(0); doc.text("$" + totalInvested.toFixed(2), 20, 46); doc.setTextColor(totalProfit >= 0 ? 14 : 200, totalProfit >= 0 ? 203 : 50, totalProfit >= 0 ? 129 : 50); doc.text((totalProfit>=0?'+':'') + "$" + totalProfit.toFixed(2), 90, 46); doc.setTextColor(0); doc.text(winRate + "%", 160, 46); doc.text(history.length.toString(), 230, 46); const bodyData = history.map(h => { const inv = parseFloat(h.totalInv) || 0; const prof = (h.netProfit !== undefined ? parseFloat(h.netProfit) : parseFloat(h.profit)) || 0; const avg = parseFloat(h.avgPrice) || 0; const exit = parseFloat(h.exitPrice) || 0; return [ h.date + '\n' + h.time, h.coin, '$' + (avg < 1 ? avg.toFixed(6) : avg.toFixed(2)), '$' + (exit < 1 ? exit.toFixed(6) : exit.toFixed(2)), '$' + inv.toFixed(2), (prof>=0?'+':'') + '$' + prof.toFixed(2), h.roi ]; }); doc.autoTable({ head: [['FECHA / HORA', 'ACTIVO', 'PRECIO ENT.', 'PRECIO SALIDA', 'INVERSIÓN', 'PNL NETO', 'ROI']], body: bodyData, startY: 58, theme: 'grid', styles: { fontSize: 9, cellPadding: 3, valign: 'middle', halign: 'center' }, headStyles: { fillColor: [21, 26, 33], textColor: 255, fontStyle: 'bold', halign: 'center' }, didParseCell: function(data) { if (data.section === 'body' && data.column.index === 5) { const raw = data.cell.raw; if(raw.startsWith('+')) data.cell.styles.textColor = [14, 203, 129]; else data.cell.styles.textColor = [246, 70, 93]; } } }); doc.save("C5X_Pro_Report.pdf"); }
+        
+        function exportPDF() { 
+            if(history.length === 0) return showToast("⚠️ Sin Datos"); 
+            const { jsPDF } = window.jspdf; const doc = new jsPDF('l', 'mm', 'a4'); 
+            let totalProfit = 0; let totalInvested = 0; let wins = 0; 
+            history.forEach(h => { 
+                const inv = parseFloat(h.totalInv) || 0; 
+                const prof = (h.netProfit !== undefined ? parseFloat(h.netProfit) : parseFloat(h.profit)) || 0; 
+                totalInvested += inv; totalProfit += prof; if(prof > 0) wins++; 
+            }); 
+            const winRate = history.length > 0 ? ((wins / history.length) * 100).toFixed(1) : 0; 
+            doc.setFillColor(11, 14, 17); doc.rect(0, 0, 297, 25, 'F'); doc.setFont("helvetica", "bold"); doc.setFontSize(22); doc.setTextColor(59, 130, 246); doc.text("C5X", 14, 16); doc.setFontSize(14); doc.setTextColor(255, 255, 255); doc.text("REPORTE PROFESIONAL", 40, 16); doc.setFillColor(245, 247, 250); doc.rect(14, 30, 270, 20, 'F'); doc.setFontSize(10); doc.setTextColor(80); doc.text("CAPITAL MOVIDO", 20, 38); doc.text("NET PROFIT", 90, 38); doc.text("WIN RATE", 160, 38); doc.text("TOTAL OPS", 230, 38); doc.setFontSize(14); doc.setTextColor(0); doc.text("$" + totalInvested.toFixed(2), 20, 46); doc.setTextColor(totalProfit >= 0 ? 14 : 200, totalProfit >= 0 ? 203 : 50, totalProfit >= 0 ? 129 : 50); doc.text((totalProfit>=0?'+':'') + "$" + totalProfit.toFixed(2), 90, 46); doc.setTextColor(0); doc.text(winRate + "%", 160, 46); doc.text(history.length.toString(), 230, 46); 
+            const bodyData = history.map(h => { const inv = parseFloat(h.totalInv) || 0; const prof = (h.netProfit !== undefined ? parseFloat(h.netProfit) : parseFloat(h.profit)) || 0; const avg = parseFloat(h.avgPrice) || 0; const exit = parseFloat(h.exitPrice) || 0; return [ h.date + '\n' + h.time, h.coin, '$' + (avg < 1 ? avg.toFixed(6) : avg.toFixed(2)), '$' + (exit < 1 ? exit.toFixed(6) : exit.toFixed(2)), '$' + inv.toFixed(2), (prof>=0?'+':'') + '$' + prof.toFixed(2), h.roi ]; }); 
+            doc.autoTable({ head: [['FECHA / HORA', 'ACTIVO', 'PRECIO ENT.', 'PRECIO SALIDA', 'INVERSIÓN', 'PNL NETO', 'ROI']], body: bodyData, startY: 58, theme: 'grid', styles: { fontSize: 9, cellPadding: 3, valign: 'middle', halign: 'center' }, headStyles: { fillColor: [21, 26, 33], textColor: 255, fontStyle: 'bold', halign: 'center' }, didParseCell: function(data) { if (data.section === 'body' && data.column.index === 5) { const raw = data.cell.raw; if(raw.startsWith('+')) data.cell.styles.textColor = [14, 203, 129]; else data.cell.styles.textColor = [246, 70, 93]; } } }); 
+            doc.save("C5X_Pro_Report.pdf"); 
+        }
         function exportData() { const dataStr = JSON.stringify({ slots, history, tickerAssets, customMultipliers, etfFavorites, globalCapital, appConfig }); const blob = new Blob([dataStr], {type: "application/json"}); const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = "C5X_Backup.json"; document.body.appendChild(a); a.click(); }
         function importData(input) { const file = input.files[0]; if(!file) return; const reader = new FileReader(); reader.onload = function(e) { try { const data = JSON.parse(e.target.result); if(data.slots) slots = data.slots; if(data.history) history = data.history; if(data.customMultipliers) { customMultipliers = data.customMultipliers; localStorage.setItem('c5x_multipliers', JSON.stringify(customMultipliers)); } if(data.etfFavorites) { etfFavorites = data.etfFavorites; localStorage.setItem('c5x_etf_favorites', JSON.stringify(etfFavorites)); } if(data.globalCapital) { globalCapital = data.globalCapital; localStorage.setItem('c5x_global_capital', globalCapital); } if(data.appConfig) { appConfig = data.appConfig; localStorage.setItem('c5x_config', JSON.stringify(appConfig)); } save(); localStorage.setItem('c5x_history', JSON.stringify(history)); location.reload(); } catch(err) { showToast("❌ Error al leer archivo"); } }; reader.readAsText(file); }
-        let serverTimeOffset = 0;
         
-        // --- ⚠️ URL DEL SERVIDOR (AUTOMÁTICA) ⚠️ ---
+        let serverTimeOffset = 0;
         const FIREBASE_PROXY_URL = "https://gateproxy-c6mfcbeatq-uc.a.run.app";
         
         async function callGateApi(method, endpoint, params = {}, requireAuth = false) {
             let url = `${FIREBASE_PROXY_URL}?endpoint=${endpoint}`;
             const headers = { 'Accept': 'application/json', 'Content-Type': 'application/json' };
-
-            if (method === 'GET' && Object.keys(params).length > 0) {
-                const queryString = new URLSearchParams(params).toString();
-                url += '&' + queryString;
-            }
-
+            if (method === 'GET' && Object.keys(params).length > 0) { const queryString = new URLSearchParams(params).toString(); url += '&' + queryString; }
             if (requireAuth) {
                 if (!apiConfig.key || !apiConfig.secret) { showToast("❌ Configura API Keys"); return null; }
                 const timestamp = Math.floor((Date.now() + serverTimeOffset) / 1000);
                 const bodyPayload = method === 'POST' ? JSON.stringify(params) : '';
                 const hashedPayload = CryptoJS.SHA512(bodyPayload || '').toString();
-                let queryForSign = '';
-                if (method === 'GET' && Object.keys(params).length > 0) { 
-                    queryForSign = new URLSearchParams(params).toString(); 
-                }
+                let queryForSign = ''; if (method === 'GET' && Object.keys(params).length > 0) { queryForSign = new URLSearchParams(params).toString(); }
                 const signString = `${method}\n${endpoint}\n${queryForSign}\n${hashedPayload}\n${timestamp}`;
                 const signature = CryptoJS.HmacSHA512(signString, apiConfig.secret).toString();
-                
-                headers['KEY'] = apiConfig.key; 
-                headers['Timestamp'] = timestamp.toString(); 
-                headers['SIGN'] = signature;
+                headers['KEY'] = apiConfig.key; headers['Timestamp'] = timestamp.toString(); headers['SIGN'] = signature;
             }
-
-            try {
-                const response = await fetch(url, {
-                    method: method,
-                    headers: headers,
-                    body: method === 'POST' ? JSON.stringify(params) : undefined
-                });
-                
-                if (!response.ok) {
-                    const errText = await response.text();
-                    throw new Error(errText || response.statusText);
-                }
-                return await response.json();
-            } catch (err) {
-                console.warn(`Error Proxy: ${err.message}`);
-                return null;
-            }
+            try { const response = await fetch(url, { method: method, headers: headers, body: method === 'POST' ? JSON.stringify(params) : undefined }); if (!response.ok) { const errText = await response.text(); throw new Error(errText || response.statusText); } return await response.json(); } catch (err) { console.warn(`Error Proxy: ${err.message}`); return null; }
         }
+        
         async function syncTimeAndBalance() { try { const start = Date.now(); const res = await callGateApi("GET", "/spot/time"); if(res && res.server_time) { const serverTime = res.server_time * 1000; serverTimeOffset = serverTime - (start + ((Date.now() - start) / 2)); console.log("✅ Hora sincronizada con Gate.io"); } } catch(e) { console.warn("⚠️ Time sync fail (usando local)", e); } fetchWalletBalance(); }
         async function testApiConnection() { const resultDiv = document.getElementById('apiTestResult'); resultDiv.innerHTML = '⏳ Probando conexión...<br>'; resultDiv.innerHTML += '<br>📡 TEST 1: Endpoint Público (/spot/time)<br>'; try { const timeRes = await callGateApi("GET", "/spot/time"); if (timeRes && timeRes.server_time) { resultDiv.innerHTML += `✅ OK - Hora servidor: ${new Date(timeRes.server_time * 1000).toLocaleTimeString()}<br>`; } else { resultDiv.innerHTML += `❌ FAIL - No data<br>`; } } catch(e) { resultDiv.innerHTML += `❌ ERROR: ${e.message}<br>`; } resultDiv.innerHTML += '<br>📊 TEST 2: Tickers Públicos<br>'; try { const tickersRes = await callGateApi("GET", "/spot/tickers"); if (tickersRes && Array.isArray(tickersRes)) { resultDiv.innerHTML += `✅ OK - ${tickersRes.length} pares encontrados<br>`; } else { resultDiv.innerHTML += `❌ FAIL - Respuesta inválida<br>`; } } catch(e) { resultDiv.innerHTML += `❌ ERROR: ${e.message}<br>`; } if (apiConfig.key && apiConfig.secret) { resultDiv.innerHTML += '<br>🔐 TEST 3: Balance (Autenticado)<br>'; try { const balanceRes = await callGateApi("GET", "/spot/accounts", {currency: "USDT"}, true); if (balanceRes && Array.isArray(balanceRes) && balanceRes.length > 0) { resultDiv.innerHTML += `✅ OK - Balance: $${parseFloat(balanceRes[0].available).toFixed(2)}<br>`; } else { resultDiv.innerHTML += `❌ FAIL - Sin balance o respuesta inválida<br>`; } } catch(e) { resultDiv.innerHTML += `❌ ERROR: ${e.message}<br>`; } } else { resultDiv.innerHTML += '<br>⚠️ TEST 3: OMITIDO - No hay API Keys<br>'; } resultDiv.innerHTML += '<br>✅ Diagnóstico completo'; resultDiv.scrollTop = resultDiv.scrollHeight; }
+        
         function clearCrashMemory() { localStorage.removeItem('c5x_crash_alerts'); showToast("✅ Memoria de alertas borrada"); }
         let gateCheckInterval = null; let gateConnected = false;
         async function checkGateConnectionStatus() { try { const res = await callGateApi("GET", "/spot/time"); updateGateIndicator(res && res.server_time); } catch(e) { updateGateIndicator(false); } }
