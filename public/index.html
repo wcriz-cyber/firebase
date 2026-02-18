@@ -1,26 +1,57 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>C5X</title>
+    <meta name="theme-color" content="#0b0e11">
+    <link rel="manifest" href="manifest.json">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="icon" type="image/png" href="icon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;700&family=Inter:wght@500;700;800&family=JetBrains+Mono:wght@500;700;800&family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js"></script>
+    <script src="https://s3.tradingview.com/tv.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+    
+    <!-- SCRIPT DE CONEXIÓN A FIREBASE -->
+    <script type="module" src="firebase-c5x.js"></script>
 
-      <!DOCTYPE html>
-      <html lang="es">
-      <head>
-          <meta charset="UTF-8">
-          <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-          <title>C5X - V25.31 UNIFIED ORBITRON</title>
-          <meta name="theme-color" content="#0b0e11">
-          <link rel="manifest" href="manifest.json">
-         <meta name="apple-mobile-web-app-capable" content="yes">
-         <meta name="mobile-web-app-capable" content="yes">
-         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-         <link rel="icon" type="image/png" href="icon.png">
-         <link rel="preconnect" href="https://fonts.googleapis.com">
-         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-         <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;700&family=Inter:wght@500;700;800&family=JetBrains+Mono:wght@500;700;800&family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@500;600;700;800&display=swap" rel="stylesheet">
-         
-         <!-- SCRIPT DE CONEXIÓN A FIREBASE -->
-         <script type="module" src="firebase-c5x.js"></script>
-      </head>
-      <body>
-          <!-- Aquí va el contenido de tu app, botones, etc. -->
-          <button onclick="window.handleGoogleLogin()">Login con Google</button>
-      </body>
-      </html>
-      
+    <style>
+        /* ... ESTILOS ... (Se omiten por brevedad) */
+    </style>
+</head>
+<body onload="init()">
+    
+    <!-- CONTENIDO HTML DE LA APP -->
+    <div id="toast">Notificación</div>
+    
+    <header class="app-header">
+        <!-- ... -->
+    </header>
+    
+    <div class="content-spacer">
+        <div id="section-operate" class="app-section active">
+            <button onclick="window.loginConGoogle({ onLoginExito: (perfil) => { console.log('Login OK', perfil); showToast('✅ Login Correcto'); }, onLoginError: (err) => { console.error(err); showToast('❌ Login Falló'); } })">
+                Conectar con Google (NUEVO)
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Lógica de la aplicación
+        function init() {
+            console.log("App iniciada. Esperando login...");
+        }
+
+        // Hacer la función de login global
+        window.loginConGoogle = loginConGoogle;
+
+    </script>
+</body>
+</html>
