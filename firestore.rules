@@ -1,0 +1,140 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // ══════════════════════════════════════════════════════════════
+    //  FUNCIONES AUXILIARES
+    // ══════════════════════════════════════════════════════════════
+
+    // ¿Está autenticado?
+    function estaAutenticado() {
+      return request.auth != null;
+    }
+
+    // ¿Es el propio usuario?
+    function esPropioUsuario(uid) {
+      return estaAutenticado() && request.auth.uid == uid;
+    }
+
+    // ¿Es admin? (lee su propio documento para verificar rol)
+    function esAdmin() {
+      return estaAutenticado() &&
+        get(/databases/$(database)/documents/usuarios/$(request.auth.uid)).data.rol == 'admin';
+    }
+
+    // ¿Es el Super Admin? → Pon aquí TU UID de Firebase Auth
+    function esSuperAdmin() {
+      return estaAutenticado() &&
+        request.auth.uid == 'PONER_AQUI_TU_UID_FIREBASE';
+    }
+
+    // ═══════════════════════════════════════════════════════════════
+    //  COLECCIÓN: usuarios
+    //  Perfil público del usuario (nombre, email, rol, etc.)
+    // ═══════════════════════════════════════════════════════════════
+    match /usuarios/{uid} {
+
+      // Leer: propio usuario + admins (para lista de usuarios)
+      // EXCEPCIÓN: admins NO ven subcolecciones sensibles (API keys, chats)
+      allow read: if esPropioUsuario(uid) || esAdmin() || esSuperAdmin();
+
+      // Crear: solo el propio usuario (primer login)
+      allow create: if esPropioUsuario(uid);
+
+      // Actualizar: propio usuario, pero NO puede cambiarse el rol a sí mismo
+      allow update: if esPropioUsuario(uid) &&
+                       !('rol' in request.resource.data) ||
+                       request.resource.data.rol == resource.data.rol;
+
+      // Admins pueden actualizar rol de otros usuarios
+      allow update: if (esAdmin() || esSuperAdmin()) &&
+                       uid != request.auth.uid;
+
+      // Borrar: solo super admin
+      allow delete: if esSuperAdmin();
+
+
+      // ─────────────────────────────────────────────────────────────
+      //  SUB-COLECCIÓN: configuracion/gateio
+      //  API Keys de Gate.io — NUNCA visibles para admins ni otros
+      // ─────────────────────────────────────────────────────────────
+      match /configuracion/{doc} {
+        // Solo el propio usuario puede ver/escribir sus API Keys
+        allow read, write: if esPropioUsuario(uid);
+        // Admins y super admin NO tienen acceso aquí (seguridad crítica)
+      }
+
+
+      // ─────────────────────────────────────────────────────────────
+      //  SUB-COLECCIÓN: trades
+      //  Historial de operaciones financieras del usuario
+      // ─────────────────────────────────────────────────────────────
+      match /trades/{tradeId} {
+        allow read, write: if esPropioUsuario(uid) || esSuperAdmin();
+        // Admins pueden leer trades (para soporte/análisis)
+        allow read: if esAdmin();
+      }
+
+
+      // ─────────────────────────────────────────────────────────────
+      //  SUB-COLECCIÓN: slots
+      //  Estado de los slots de trading del usuario
+      // ─────────────────────────────────────────────────────────────
+      match /slots/{slotId} {
+        allow read, write: if esPropioUsuario(uid) || esSuperAdmin();
+      }
+
+
+      // ─────────────────────────────────────────────────────────────
+      //  SUB-COLECCIÓN: configuracion_app
+      //  Preferencias de la app (tema, multiplicadores, etc.)
+      // ─────────────────────────────────────────────────────────────
+      match /configuracion_app/{doc} {
+        allow read, write: if esPropioUsuario(uid) || esSuperAdmin();
+      }
+
+    }
+
+
+    // ═══════════════════════════════════════════════════════════════
+    //  COLECCIÓN: consultas_privadas
+    //  Chat de soporte SUPER PRIVADO — Solo usuario <-> Super Admin
+    //  LOS ADMINS NORMALES NO TIENEN ACCESO
+    // ═══════════════════════════════════════════════════════════════
+    match /consultas_privadas/{uid_usuario} {
+
+      // Solo el propio usuario o el Super Admin pueden ver el documento raíz
+      allow read, write: if esPropioUsuario(uid_usuario) || esSuperAdmin();
+
+      // Los mensajes: solo el usuario propietario y el Super Admin
+      match /mensajes/{mensajeId} {
+        allow read, write: if esPropioUsuario(uid_usuario) || esSuperAdmin();
+        // ADMINS NORMALES: acceso DENEGADO — regla implícita de Firestore
+      }
+
+    }
+
+
+    // ═══════════════════════════════════════════════════════════════
+    //  COLECCIÓN: config_global
+    //  Configuración pública de la app (versión, noticias, etc.)
+    // ═══════════════════════════════════════════════════════════════
+    match /config_global/{doc} {
+      // Todos los usuarios autenticados pueden leer
+      allow read: if estaAutenticado();
+      // Solo super admin puede escribir
+      allow write: if esSuperAdmin();
+    }
+
+
+    // ═══════════════════════════════════════════════════════════════
+    //  REGLA GLOBAL DE SEGURIDAD
+    //  Rechazar cualquier acceso no cubierto por las reglas anteriores
+    // ═══════════════════════════════════════════════════════════════
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+  }
+}
