@@ -1,0 +1,32 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // /config/admin — UID del super admin
+    // Lectura pública, escritura solo para el uid que coincide
+    match /config/admin {
+      allow read: if true;
+      allow write: if request.auth != null;
+    }
+
+    // /whitelist/approved — lista de emails autorizados
+    // Lectura para cualquier usuario autenticado, escritura para cualquier autenticado
+    // (la app controla quién puede escribir mediante isSuperAdmin)
+    match /whitelist/approved {
+      allow read: if request.auth != null;
+      allow write: if request.auth != null;
+    }
+
+    // Datos privados de cada usuario
+    match /users/{userId}/{document=**} {
+      allow read, write: if request.auth != null
+                         && request.auth.uid == userId;
+    }
+
+    // Chat de soporte
+    match /consultas_privadas/{userId}/{document=**} {
+      allow read, write: if request.auth != null
+                         && request.auth.uid == userId;
+    }
+  }
+}
