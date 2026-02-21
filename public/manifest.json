@@ -1,0 +1,70 @@
+{
+  "name": "C5X Trading Bot",
+  "short_name": "C5X",
+  "description": "Dashboard de trading con alertas de mercado en tiempo real",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#0a0e13",
+  "theme_color": "#0b0e11",
+  "lang": "es",
+  "dir": "ltr",
+  "categories": ["finance", "productivity"],
+  "icons": [
+    {
+      "src": "icon.png",
+      "sizes": "72x72",
+      "type": "image/png"
+    },
+    {
+      "src": "icon.png",
+      "sizes": "96x96",
+      "type": "image/png"
+    },
+    {
+      "src": "icon.png",
+      "sizes": "128x128",
+      "type": "image/png"
+    },
+    {
+      "src": "icon.png",
+      "sizes": "144x144",
+      "type": "image/png"
+    },
+    {
+      "src": "icon.png",
+      "sizes": "152x152",
+      "type": "image/png"
+    },
+    {
+      "src": "icon.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icon.png",
+      "sizes": "384x384",
+      "type": "image/png"
+    },
+    {
+      "src": "icon.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Dashboard",
+      "short_name": "Trading",
+      "description": "Abrir panel de trading",
+      "url": "/",
+      "icons": [{ "src": "icon.png", "sizes": "192x192" }]
+    }
+  ],
+  "screenshots": [],
+  "prefer_related_applications": false,
+  "display_override": ["standalone", "minimal-ui"]
+}
